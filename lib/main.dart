@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'views/movie.dart';
 import 'views/home.dart';
 
@@ -16,7 +17,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(brightness: Brightness.dark,primarySwatch: Colors.grey),
+      theme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.grey,
+          fontFamily: GoogleFonts.robotoFlex().fontFamily,
+      ),
       home: const MainView(),
     );
   }
