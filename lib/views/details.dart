@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -67,11 +65,11 @@ class Details extends StatelessWidget {
                 child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,softWrap: true,maxLines: 2,style: TextStyle(fontSize: 24),),
-                  SizedBox(height: 16,),
-                  Text('Release date:  $releaseOn',style: TextStyle(fontSize: 16),),
-                  SizedBox(height: 12,),
-                  Text('Rating:  $rate / 10',style: TextStyle(fontSize: 16),),
+                  Text(title,softWrap: true,maxLines: 2,style: const TextStyle(fontSize: 24),),
+                  const SizedBox(height: 16,),
+                  Text('Release date:  $releaseOn',style: const TextStyle(fontSize: 16),),
+                  const SizedBox(height: 12,),
+                  Text('Rating:  $rate / 10',style: const TextStyle(fontSize: 16),),
                 ],),),
           ],),
            Container(padding:  const EdgeInsets.fromLTRB(10, 0, 12, 4),child: const Text('Overview: ',style: TextStyle(fontSize: 20)),),

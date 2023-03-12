@@ -68,15 +68,14 @@ class _MainViewState extends State<MainView> {
                   ),
                 ),
               ),
-              // leading: IconButton(
-              //   icon: Icon(
-              //     Icons.menu,
-              //     color: Colors.white,
-              //   ),
-              //   onPressed: () {},
-              // ),
-              // actions: [
-              // ],
+              actions:  [
+                IconButton(padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  icon: const Icon(
+                    Icons.menu,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
             ),
           ],
           body: views[currentView],

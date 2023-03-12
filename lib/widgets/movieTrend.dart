@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../views/details.dart';
+
 class MovieTrend extends StatelessWidget {
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
@@ -35,7 +37,20 @@ class MovieTrend extends StatelessWidget {
                     padding:
                     const EdgeInsets.fromLTRB(0, 4, 12, 0),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        // Show details
+                        FocusManager.instance.primaryFocus?.unfocus();
+
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) =>
+                              Details(
+                                title: movieTrendList[index]['title'],
+                                backdrop: (movieTrendList[index]['backdrop_path'])==null?'null':movieTrendList[index]['backdrop_path'],
+                                overview: movieTrendList[index]['overview'],
+                                poster: movieTrendList[index]['poster_path'],
+                                rate: movieTrendList[index]['vote_average'].toStringAsFixed(2),
+                                releaseOn: movieTrendList[index]['release_date'],),),);
+                      },
                       child: SizedBox(
                         width: 369,
                         child: Column(
@@ -43,7 +58,9 @@ class MovieTrend extends StatelessWidget {
                             Stack(
                               alignment: Alignment.topRight,
                               children: [
-                                Image.network(
+                                (tmdbImageUrl +
+                                    movieTrendList[index]
+                                    ['backdrop_path']!=null)?Image.network(
                                   tmdbImageUrl +
                                       movieTrendList[index]
                                       ['backdrop_path'],
@@ -71,7 +88,7 @@ class MovieTrend extends StatelessWidget {
                                     }
                                     return child;
                                   },
-                                ),
+                                ):  const Image(image: AssetImage('assets/no_image_220h.jpg')),
                                 Container(
                                   height: 20,
                                   width: 48,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../views/details.dart';
+
 class MovieUpcoming extends StatelessWidget {
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
@@ -36,7 +38,20 @@ class MovieUpcoming extends StatelessWidget {
                       padding:
                       const EdgeInsets.fromLTRB(0, 0, 12, 0),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          // Show details
+                          FocusManager.instance.primaryFocus?.unfocus();
+
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) =>
+                                Details(
+                                  title: movieTopRatedList[index]['title'],
+                                  backdrop: (movieTopRatedList[index]['backdrop_path'])==null?'null':movieTopRatedList[index]['backdrop_path'],
+                                  overview: movieTopRatedList[index]['overview'],
+                                  poster: movieTopRatedList[index]['poster_path'],
+                                  rate: movieTopRatedList[index]['vote_average'].toStringAsFixed(2),
+                                  releaseOn: movieTopRatedList[index]['release_date'],),),);
+                        },
                         child: SizedBox(
                           width: 120,
                           child: Column(
