@@ -29,9 +29,12 @@ class Details extends StatelessWidget {
                 Positioned(
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                       child: Image.network(
+                       child: (backdrop)!='null'?Image.network(
                     tmdbImageUrl + backdrop,
                     fit: BoxFit.cover,
+                  ): const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Image(image: AssetImage('assets/no_image.jpg')),
                   ),
                 )),
                 Container(
@@ -54,7 +57,7 @@ class Details extends StatelessWidget {
           ),
           Row(
             children: [
-            Padding(padding: EdgeInsets.fromLTRB(8, 0, 12, 12)
+            Padding(padding: const EdgeInsets.fromLTRB(8, 0, 12, 12)
             ,child: Container(
                   height: 150,
                   child: Image.network(tmdbImageUrl + poster),

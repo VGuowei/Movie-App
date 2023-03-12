@@ -117,7 +117,7 @@ class _TVShowsState extends State<TVShows> {
                             builder: (context) =>
                                 Details(
                                   title: listOfTVShows[index]['name'],
-                                  backdrop: listOfTVShows[index]['backdrop_path'],
+                                  backdrop: (listOfTVShows[index]['backdrop_path'])==null?'null':listOfTVShows[index]['backdrop_path'],
                                   overview: listOfTVShows[index]['overview'],
                                   poster: listOfTVShows[index]['poster_path'],
                                   rate: listOfTVShows[index]['vote_average'].toStringAsFixed(2),

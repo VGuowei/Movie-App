@@ -31,8 +31,6 @@ class _MovieViewState extends State<MovieView> {
     setState(() {
       listOfMovies = result!['results'];
     });
-    //print(result!['page']);
-    //print(listOfMovies);
   }
 
   nextPage(int page) async {
@@ -123,7 +121,7 @@ class _MovieViewState extends State<MovieView> {
                                     builder: (context) =>
                                         Details(
                                           title: listOfMovies[index]['title'],
-                                          backdrop: listOfMovies[index]['backdrop_path'],
+                                          backdrop: (listOfMovies[index]['backdrop_path'])==null?'null':listOfMovies[index]['backdrop_path'],
                                           overview: listOfMovies[index]['overview'],
                                           poster: listOfMovies[index]['poster_path'],
                                           rate: listOfMovies[index]['vote_average'].toStringAsFixed(2),
@@ -136,10 +134,7 @@ class _MovieViewState extends State<MovieView> {
                                     SizedBox(
                                       height: 200,
                                       width: 117,
-                                      child: Image.network(
-                                        tmdbImageUrl +
-                                            listOfMovies[index]
-                                                ['poster_path'],
+                                      child: Image.network(tmdbImageUrl + listOfMovies[index]['poster_path'],
                                         loadingBuilder: (context, child,
                                             loadingProgress) {
                                           if (loadingProgress != null) {
