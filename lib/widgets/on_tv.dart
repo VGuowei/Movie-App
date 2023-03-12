@@ -18,7 +18,7 @@ class OnTv extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
                 child: Text(
-                  'On Tv',
+                  'On TV',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
                 ),
               ),
@@ -72,7 +72,7 @@ class OnTv extends StatelessWidget {
                                 ),
                                 Container(
                                   height: 20,
-                                  width: 44,
+                                  width: 48,
                                   color: Colors.black54,
                                   child: Row(
                                     children: [

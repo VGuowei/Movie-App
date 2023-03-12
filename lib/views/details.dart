@@ -66,13 +66,14 @@ class Details extends StatelessWidget {
                 children: [
                   Text(title,softWrap: true,maxLines: 2,style: TextStyle(fontSize: 24),),
                   SizedBox(height: 16,),
-                  Text('Release on:  $releaseOn',style: TextStyle(fontSize: 16),),
+                  Text('Release date:  $releaseOn',style: TextStyle(fontSize: 16),),
                   SizedBox(height: 12,),
                   Text('Rating:  $rate / 10',style: TextStyle(fontSize: 16),),
                 ],),),
           ],),
            Container(padding:  const EdgeInsets.fromLTRB(10, 0, 12, 4),child: const Text('Overview: ',style: TextStyle(fontSize: 20)),),
-           Padding(padding: const EdgeInsets.all(10),child: Text(overview,style: const TextStyle(height: 1.5,fontSize: 18,wordSpacing: 1.5)),)
+           Padding(padding: const EdgeInsets.all(10),child: Text(overview,style: GoogleFonts.amiko(height: 1.5,fontSize: 18,wordSpacing: 1.5)),),
+          const SizedBox(height: 20,),
         ],
       ),
     );

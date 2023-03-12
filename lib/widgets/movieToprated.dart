@@ -72,7 +72,7 @@ class MovieUpcoming extends StatelessWidget {
                                   ),
                                   Container(
                                     height: 20,
-                                    width: 44,
+                                    width: 48,
                                     color: Colors.black54,
                                     child: Row(
                                       children: [

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_maniac/views/tv.dart';
 import 'views/movie.dart';
 import 'views/home.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent,systemNavigationBarColor: kDefaultIconDarkColor ));
   runApp(const MyApp());
 }
 
@@ -41,7 +42,7 @@ class _MainViewState extends State<MainView> {
   List<Widget> views= const [
        HomeView(),
        MovieView(),
-       HomeView(),
+       TVShows(),
        HomeView(),
   ];
 
