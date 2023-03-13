@@ -42,6 +42,7 @@ class _SearchViewState extends State<SearchView> {
             Container(
               height: 150,
               width: 100,
+              /// the if condition does not work in this case when the url poster_path is null, but it works for other created views
               child: ((tmdbImageUrl+searchResult[i]['poster_path'])!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path'],):const Image(image:AssetImage('assets/no_image.jpg')),
             ),
             const SizedBox(width: 20,),
