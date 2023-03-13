@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import '../views/details.dart';
 
 class OnTv extends StatelessWidget {
+  const OnTv({Key? key,required this.onTv}) : super(key: key);
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
   final List onTv;
-
-  const OnTv({Key? key,required this.onTv}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

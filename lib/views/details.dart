@@ -55,7 +55,7 @@ class Details extends StatelessWidget {
           ),
           Row(
             children: [
-            Padding(padding: const EdgeInsets.fromLTRB(8, 0, 12, 12)
+            Padding(padding: const EdgeInsets.fromLTRB(8, 8, 12, 12)
             ,child: Container(
                   height: 150,
                   width: 120,
@@ -73,8 +73,8 @@ class Details extends StatelessWidget {
                   Text('Rating:  $rate / 10',style: const TextStyle(fontSize: 16),),
                 ],),),
           ],),
-           Container(padding:  const EdgeInsets.fromLTRB(10, 0, 12, 4),child: const Text('Overview: ',style: TextStyle(fontSize: 20)),),
-           Padding(padding: const EdgeInsets.all(10),child: Text(overview,style: GoogleFonts.amiko(height: 1.5,fontSize: 18,wordSpacing: 1.5)),),
+           Container(padding:  const EdgeInsets.fromLTRB(20, 10, 12, 0),child:  Text('Overview: ',style: GoogleFonts.robotoMono(fontSize: 20)),),
+           Padding(padding: const EdgeInsets.fromLTRB(20, 6, 20, 20),child: Text(overview,style: GoogleFonts.robotoMono(height: 1.5,fontSize: 17)),),
           const SizedBox(height: 20,),
         ],
       ),

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tmdb_api/tmdb_api.dart';
-
 import 'details.dart';
 
 
 class DetailsPerson extends StatelessWidget {
   final String name,profile,popularity;
-  final List played;
+  final List played; // the actor's known_for list https://developers.themoviedb.org/3/people/get-popular-people
   const DetailsPerson({Key? key, required this.name, required this.profile, required this.popularity, required this.played}) : super(key: key);
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/original';
@@ -30,7 +28,9 @@ class DetailsPerson extends StatelessWidget {
                   SizedBox(height: 280,width: 180,child: Image.network(tmdbImageUrl+profile),),
                   Column(
                     children: [
-                      Text(name,style: GoogleFonts.robotoMono(fontSize: 20,fontWeight: FontWeight.w500),maxLines: 3,),
+                      Container(
+                        width: 140,
+                        child: Text(name,style: GoogleFonts.robotoMono(fontSize: 20,fontWeight: FontWeight.w500),maxLines: 3,),),
                       const SizedBox(height: 50,),
                       Container(
                         height: 80,
@@ -70,19 +70,25 @@ class DetailsPerson extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      print(played.length);
                       //Show details
                       FocusManager.instance.primaryFocus?.unfocus();
-
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) =>
-                            Details(
-                              title: played[index]['title'],
-                              backdrop: (played[index]['backdrop_path'])==null?'null':played[index]['backdrop_path'],
-                              overview: played[index]['overview'],
-                              poster: played[index]['poster_path'],
-                              rate: played[index]['vote_average'].toStringAsFixed(2),
-                              releaseOn: played[index]['release_date'],)
+                        (played[index]['media_type']=='movie')
+                            ?Details( // media type is movie
+                          title: played[index]['title'],
+                          backdrop: (played[index]['backdrop_path'])==null?'null':played[index]['backdrop_path'],
+                          overview: played[index]['overview'],
+                          poster: played[index]['poster_path'],
+                          rate: played[index]['vote_average'].toStringAsFixed(2),
+                          releaseOn: played[index]['release_date'],)
+                            :Details( // media type is tv show
+                          title: played[index]['name'],
+                          backdrop: (played[index]['backdrop_path'])==null?'null':played[index]['backdrop_path'],
+                          overview: played[index]['overview'],
+                          poster: (played[index]['poster_path'])==null?'null':played[index]['poster_path'],
+                          rate: played[index]['vote_average'].toStringAsFixed(2),
+                          releaseOn: played[index]['first_air_date'],)
                         ,),);
                     },
                     child: Center(

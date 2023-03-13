@@ -14,18 +14,13 @@ class MovieTrend extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: const [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
-                child: Text(
-                  'Trending movies of the week',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-                ),
-              ),
-            ],
+          const Text(
+            'Trending movies of the week',maxLines: 2,softWrap: true,
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
+          const SizedBox(height: 10,),
           Container(
             height: 280,
             child: Scrollbar(

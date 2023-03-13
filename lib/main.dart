@@ -39,7 +39,7 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   // search keyword
   final searchController=TextEditingController();
-  //
+  // widgets to swap in the body of Scaffold
   int currentView=0;
   List<Widget> views= const [
        HomeView(),
@@ -47,7 +47,6 @@ class _MainViewState extends State<MainView> {
        TVShows(),
        HomeView(),
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +82,10 @@ class _MainViewState extends State<MainView> {
                   icon: const Icon(
                     Icons.menu,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                  //TODO add setting menu
+
+                  },
                 ),
               ],
             ),
