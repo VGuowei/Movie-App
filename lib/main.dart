@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_maniac/views/search.dart';
 import 'package:movie_maniac/views/tv.dart';
 import 'views/movie.dart';
 import 'views/home.dart';
@@ -36,8 +37,9 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-
-
+  // search keyword
+  final searchController=TextEditingController();
+  //
   int currentView=0;
   List<Widget> views= const [
        HomeView(),
@@ -60,12 +62,20 @@ class _MainViewState extends State<MainView> {
               toolbarHeight: 55,
               title: SizedBox(
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: searchController,
+                  decoration: const InputDecoration(
                     hintText: "Search",
                     border: InputBorder.none,
-                    icon: IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.search)),
+                    prefixIcon: Icon(Icons.search)
                   ),
+                  onSubmitted: (value){
+                    // when search value is not empty, navigate to search view
+                    if (value.isNotEmpty){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SearchView(keyword: value,) ,),);
+                      searchController.clear();
+                    }
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
                 ),
               ),
               actions:  [
