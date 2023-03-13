@@ -64,7 +64,7 @@ class _MainViewState extends State<MainView> {
                 child: TextField(
                   controller: searchController,
                   decoration: const InputDecoration(
-                    hintText: "Search",
+                    hintText: "Search for Movie, TV show or Actor",
                     border: InputBorder.none,
                     prefixIcon: Icon(Icons.search)
                   ),

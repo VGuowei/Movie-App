@@ -104,7 +104,7 @@ class _MovieViewState extends State<MovieView> {
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 150,
                             crossAxisSpacing: 5.0,
                             mainAxisSpacing: 12.0,

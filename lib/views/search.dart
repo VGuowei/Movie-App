@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_maniac/views/details_person.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 import 'details.dart';
@@ -57,7 +58,7 @@ class _SearchViewState extends State<SearchView> {
                   const SizedBox(height: 16,),
                   Text('Release date: ${searchResult[i]['release_date']}',style: const TextStyle(fontSize: 16),),
                   const SizedBox(height: 12,),
-                  Text('Rating: ${searchResult[i]['vote_average'].toStringAsFixed(2)} /10',style: const TextStyle(fontSize: 16),),
+                  Text('Rating: ${searchResult[i]['vote_average'].toStringAsFixed(1)}',style: const TextStyle(fontSize: 16),),
                   const SizedBox(height: 8,),
                 ],),),
           ],),
@@ -78,7 +79,7 @@ class _SearchViewState extends State<SearchView> {
       case 'tv':
         return Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Row(children: [
+          child: InkWell(child: Row(children: [
             Container(
               height: 150,
               width: 100,
@@ -95,10 +96,53 @@ class _SearchViewState extends State<SearchView> {
                   const SizedBox(height: 16,),
                   Text('Release date: ${searchResult[i]['first_air_date']}',style: const TextStyle(fontSize: 16),),
                   const SizedBox(height: 12,),
-                  Text('Rating: ${searchResult[i]['vote_average'].toStringAsFixed(2)} /10',style: const TextStyle(fontSize: 16),),
+                  Text('Rating: ${searchResult[i]['vote_average'].toStringAsFixed(1)}',style: const TextStyle(fontSize: 16),),
                   const SizedBox(height: 8,),
                 ],),),
-          ],),
+          ],),onTap: (){
+            // Show details
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) =>
+                  Details(
+                    title: searchResult[i]['name'],
+                    backdrop: (searchResult[i]['backdrop_path'])==null?'null':searchResult[i]['backdrop_path'],
+                    overview: searchResult[i]['overview'],
+                    poster:  (searchResult[i]['poster_path'])==null?'null':searchResult[i]['poster_path'],
+                    rate: searchResult[i]['vote_average'].toStringAsFixed(2),
+                    releaseOn: (searchResult[i]['first_air_date']=='')?'null':searchResult[i]['first_air_date'],
+                  ),),);
+          },),
+        );
+
+      case'person':
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: InkWell(child:
+          Row(children: [
+            Container(
+              height: 150,
+              width: 100,
+              child: (searchResult[i]['profile_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['profile_path']):const Image(image:AssetImage('assets/no_image.jpg')),
+            ),
+            const SizedBox(width: 20,),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(searchResult[i]['name'],softWrap: true,maxLines: 2,style: const TextStyle(fontSize: 20),),
+                  const SizedBox(height: 6,),
+                  const Text('Type: Celebrity',style: TextStyle(fontSize: 14)),
+                ],),),
+          ],),onTap: (){
+            // Show details
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                DetailsPerson(
+                  name:searchResult[i]['name'],
+                  profile:searchResult[i]['profile_path'],
+                  popularity: searchResult[i]['popularity'].toString(),
+                  played: searchResult[i]['known_for'],
+                ),),);
+          },),
         );
 
       default:
@@ -126,8 +170,8 @@ class _SearchViewState extends State<SearchView> {
       body: Padding(padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          Center(child: Text('${searchResult.length} results'),),
-          const SizedBox(height: 8,),
+          // Center(child: Text('${searchResult.length} results'),),
+          // const SizedBox(height: 8,),
           Expanded(child: (searchResult.isNotEmpty)?ListView.builder(
             itemCount: searchResult.length,
             itemBuilder: (context, index) {
