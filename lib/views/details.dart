@@ -58,7 +58,8 @@ class Details extends StatelessWidget {
             Padding(padding: const EdgeInsets.fromLTRB(8, 0, 12, 12)
             ,child: Container(
                   height: 150,
-                  child: Image.network(tmdbImageUrl + poster),
+                  width: 120,
+                  child: (poster!='null')?Image.network(tmdbImageUrl + poster):const Image(image: AssetImage('assets/no_image.jpg')),
                 ),),
               // const SizedBox(width: 24,),
               Flexible(
@@ -67,7 +68,7 @@ class Details extends StatelessWidget {
                 children: [
                   Text(title,softWrap: true,maxLines: 2,style: const TextStyle(fontSize: 24),),
                   const SizedBox(height: 16,),
-                  Text('Release date:  $releaseOn',style: const TextStyle(fontSize: 16),),
+                  (releaseOn!='null')?Text('Release date:  $releaseOn',style: const TextStyle(fontSize: 16),):const Text('No release date'),
                   const SizedBox(height: 12,),
                   Text('Rating:  $rate / 10',style: const TextStyle(fontSize: 16),),
                 ],),),

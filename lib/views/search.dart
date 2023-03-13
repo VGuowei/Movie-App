@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
+import 'details.dart';
+
 class SearchView extends StatefulWidget {
   // search keyword
   final String keyword;
@@ -36,14 +38,13 @@ class _SearchViewState extends State<SearchView> {
 
     switch(type){
       case 'movie':
-        return Padding(
+        return InkWell(child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Row(children: [
             Container(
               height: 150,
               width: 100,
-              /// the if condition does not work in this case when the url poster_path is null, but it works for other created views
-              child: ((tmdbImageUrl+searchResult[i]['poster_path'])!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path'],):const Image(image:AssetImage('assets/no_image.jpg')),
+               child: ((searchResult[i]['poster_path'])!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path'],):const Image(image:AssetImage('assets/no_image.jpg')),
             ),
             const SizedBox(width: 20,),
             Flexible(
@@ -60,38 +61,50 @@ class _SearchViewState extends State<SearchView> {
                   const SizedBox(height: 8,),
                 ],),),
           ],),
+        ),onTap: (){
+          // Show details
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) =>
+                Details(
+                  title: searchResult[i]['title'],
+                  backdrop: (searchResult[i]['backdrop_path'])==null?'null':searchResult[i]['backdrop_path'],
+                  overview: searchResult[i]['overview'],
+                  poster:  (searchResult[i]['poster_path'])==null?'null':searchResult[i]['poster_path'],
+                  rate: searchResult[i]['vote_average'].toStringAsFixed(2),
+                  releaseOn: (searchResult[i]['release_date']=='')?'null':searchResult[i]['release_date'],
+                ),),);
+        });
+
+      case 'tv':
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(children: [
+            Container(
+              height: 150,
+              width: 100,
+              child: (searchResult[i]['poster_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path']):const Image(image:AssetImage('assets/no_image.jpg')),
+            ),
+            const SizedBox(width: 20,),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(searchResult[i]['name'],softWrap: true,maxLines: 2,style: const TextStyle(fontSize: 20),),
+                  const SizedBox(height: 6,),
+                  Text('Type: ${searchResult[i]['media_type']}',style: const TextStyle(fontSize: 14)),
+                  const SizedBox(height: 16,),
+                  Text('Release date: ${searchResult[i]['first_air_date']}',style: const TextStyle(fontSize: 16),),
+                  const SizedBox(height: 12,),
+                  Text('Rating: ${searchResult[i]['vote_average'].toStringAsFixed(2)} /10',style: const TextStyle(fontSize: 16),),
+                  const SizedBox(height: 8,),
+                ],),),
+          ],),
         );
 
-      //case 'tv':
-        // return Padding(
-        //   padding: const EdgeInsets.all(10.0),
-        //   child: Row(children: [
-        //     Container(
-        //       height: 150,
-        //       width: 100,
-        //       child: (tmdbImageUrl+searchResult[i]['poster_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path']):const Image(image:AssetImage('assets/no_image.jpg')),
-        //     ),
-        //     const SizedBox(width: 20,),
-        //     Flexible(
-        //       child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         children: [
-        //           Text(searchResult[i]['name'],softWrap: true,maxLines: 2,style: const TextStyle(fontSize: 20),),
-        //           const SizedBox(height: 6,),
-        //           Text('Type: ${searchResult[i]['media_type']}',style: const TextStyle(fontSize: 14)),
-        //           const SizedBox(height: 16,),
-        //           Text('Release date: ${searchResult[i]['first_air_date']}',style: const TextStyle(fontSize: 16),),
-        //           const SizedBox(height: 12,),
-        //           Text('Rating: ${searchResult[i]['vote_average'].toStringAsFixed(2)} /10',style: const TextStyle(fontSize: 16),),
-        //           const SizedBox(height: 8,),
-        //         ],),),
-        //   ],),
-        // );
       default:
         // go to next index
         return Container();
     }
-    //print(type);
   }
 
   @override
