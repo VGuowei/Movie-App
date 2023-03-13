@@ -32,7 +32,6 @@ class _SearchViewState extends State<SearchView> {
     setState(() {
       searchResult = result!['results'];
     });
-    //print(result);
   }
 
   mediaType(String type, int i){
@@ -45,7 +44,30 @@ class _SearchViewState extends State<SearchView> {
             Container(
               height: 150,
               width: 100,
-               child: ((searchResult[i]['poster_path'])!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path'],):const Image(image:AssetImage('assets/no_image.jpg')),
+               child: ((searchResult[i]['poster_path'])!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path'],
+                 loadingBuilder: (context, child, loadingProgress) {
+                   if (loadingProgress !=
+                       null) {
+                     return Center(
+                       child: SizedBox(
+                         width: 140,
+                         child: Column(
+                           children: const [
+                             SizedBox(
+                               height: 50,
+                             ),
+                             CircularProgressIndicator(),
+                             SizedBox(
+                               height: 50,
+                             )
+                           ],
+                         ),
+                       ),
+                     );
+                   }
+                   return child;
+                 },
+                 ):const Image(image:AssetImage('assets/no_image.jpg')),
             ),
             const SizedBox(width: 20,),
             Flexible(

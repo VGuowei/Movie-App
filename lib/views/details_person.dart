@@ -25,7 +25,30 @@ class DetailsPerson extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(height: 280,width: 180,child: Image.network(tmdbImageUrl+profile),),
+                  SizedBox(height: 280,width: 180,child: Image.network(tmdbImageUrl+profile
+                  ,loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress !=
+                          null) {
+                        return Center(
+                          child: SizedBox(
+                            width: 369,
+                            child: Column(
+                              children: const [
+                                SizedBox(
+                                  height: 90,
+                                ),
+                                CircularProgressIndicator(),
+                                SizedBox(
+                                  height: 80,
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                      return child;
+                  },
+                  ),),
                   Column(
                     children: [
                       Container(
