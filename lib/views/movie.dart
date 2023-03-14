@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_maniac/views/details.dart';
+import 'package:movie_maniac/views/details_movie&tv.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 class MovieView extends StatefulWidget {
@@ -14,17 +14,14 @@ class _MovieViewState extends State<MovieView> {
   final tmdb = TMDB(
     ApiKeys('b5885260c7ceb67abd3e466068f303dc',
         'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNTg4NTI2MGM3Y2ViNjdhYmQzZTQ2NjA2OGYzMDNkYyIsInN1YiI6IjYzOTlkNjJjNzdjMDFmMDBjYTVjOWViZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Vi-Q2jc723p4jv2EStCaNIl4YxbyUCNtQvP8_WTn00A'),
-    logConfig: const ConfigLogger(
-      showLogs: true,
-      showErrorLogs: true,
-    ),
+    logConfig: const ConfigLogger.showNone(),
   );
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
 
   Map? result;
   int onPage = 1;
-  List listOfMovies = [];
+  List listOfMovies =[];
 
   getMovies() async {
     result = await tmdb.v3.movies.getPopular(page: onPage);
@@ -32,17 +29,8 @@ class _MovieViewState extends State<MovieView> {
       listOfMovies = result!['results'];
     });
   }
-
-  nextPage(int page) async {
-    listOfMovies =[];
-    result = await tmdb.v3.movies.getPopular(page: page);
-    setState(() {
-      listOfMovies = result!['results'];
-    });
-  }
-
-  previousPage(int page) async {
-    listOfMovies =[];
+  browseMovies(int page) async {
+    listOfMovies = []; // make it empty first to auto scroll back to top
     result = await tmdb.v3.movies.getPopular(page: page);
     setState(() {
       listOfMovies = result!['results'];
@@ -125,7 +113,11 @@ class _MovieViewState extends State<MovieView> {
                                           overview: listOfMovies[index]['overview'],
                                           poster: listOfMovies[index]['poster_path'],
                                           rate: listOfMovies[index]['vote_average'].toStringAsFixed(2),
-                                          releaseOn: listOfMovies[index]['release_date'],),),);
+                                          releaseOn: listOfMovies[index]['release_date'],
+                                          id: listOfMovies[index]['id'],
+                                          popularity: listOfMovies[index]['popularity'],
+                                          type: 'movie',
+                                        ),),);
                               },
                               child: Center(
                                 child: Stack(
@@ -134,7 +126,9 @@ class _MovieViewState extends State<MovieView> {
                                     SizedBox(
                                       height: 200,
                                       width: 117,
-                                      child: Image.network(tmdbImageUrl + listOfMovies[index]['poster_path'],
+                                      // check in the response list if the poster_path is null or not
+                                      child: (listOfMovies[index]['poster_path']!=null)?
+                                      Image.network(tmdbImageUrl + listOfMovies[index]['poster_path'],
                                         loadingBuilder: (context, child,
                                             loadingProgress) {
                                           if (loadingProgress != null) {
@@ -142,7 +136,7 @@ class _MovieViewState extends State<MovieView> {
                                           }
                                           return child;
                                         },
-                                      ),
+                                      ):const Image(image: AssetImage('assets/no_image_poster.png'),),
                                     ),
                                     Container(
                                       height: 20,
@@ -155,7 +149,7 @@ class _MovieViewState extends State<MovieView> {
                                             size: 20,
                                             color: Colors.yellow,
                                           ),
-                                          Text(listOfMovies[index]['vote_average'].toStringAsFixed(1),style: TextStyle(fontSize: 11),)
+                                          Text(listOfMovies[index]['vote_average'].toStringAsFixed(1),style: const TextStyle(fontSize: 11),)
                                         ],
                                       ),
                                     )
@@ -170,12 +164,14 @@ class _MovieViewState extends State<MovieView> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             ElevatedButton(
+                              // previous page
                                 onPressed: () {
+                                  // page cannot be <= 0
                                   if(onPage>1){
                                     setState(() {
                                       onPage=onPage-1;
-                                      previousPage(onPage);
                                     });
+                                    browseMovies(onPage);
                                   }
                                 },
                                 child: const Icon(
@@ -187,11 +183,12 @@ class _MovieViewState extends State<MovieView> {
                               style: const TextStyle(fontSize: 26),
                             ),
                             ElevatedButton(
+                              // next page
                                 onPressed: () {
                                   setState(() {
                                     onPage = onPage + 1;
-                                    nextPage(onPage);
                                   });
+                                  browseMovies(onPage);
                                 },
                                 child: const Icon(
                                   Icons.navigate_next,

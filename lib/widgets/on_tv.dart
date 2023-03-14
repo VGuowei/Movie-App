@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../views/details.dart';
+import '../views/details_movie&tv.dart';
 
 class OnTv extends StatelessWidget {
   const OnTv({Key? key,required this.onTv}) : super(key: key);
@@ -39,16 +39,16 @@ class OnTv extends StatelessWidget {
                       onTap: () {
                         // Show details
                         FocusManager.instance.primaryFocus?.unfocus();
-
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) =>
-                              Details(
-                                title: onTv[index]['name'],
-                                backdrop: (onTv[index]['backdrop_path'])==null?'null':onTv[index]['backdrop_path'],
-                                overview: onTv[index]['overview'],
-                                poster: onTv[index]['poster_path'],
-                                rate: onTv[index]['vote_average'].toStringAsFixed(2),
-                                releaseOn: onTv[index]['first_air_date'],),),);
+                        //
+                        // Navigator.push(context, MaterialPageRoute(
+                        //   builder: (context) =>
+                        //       Details(
+                        //         title: onTv[index]['name'],
+                        //         backdrop: (onTv[index]['backdrop_path'])==null?'null':onTv[index]['backdrop_path'],
+                        //         overview: onTv[index]['overview'],
+                        //         poster: onTv[index]['poster_path'],
+                        //         rate: onTv[index]['vote_average'].toStringAsFixed(2),
+                        //         releaseOn: onTv[index]['first_air_date'],),),);
                       },
                       child: SizedBox(
                         width: 165,

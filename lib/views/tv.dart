@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_maniac/views/details.dart';
+import 'package:movie_maniac/views/details_movie&tv.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 class TVShows extends StatefulWidget {
@@ -14,10 +14,7 @@ class _TVShowsState extends State<TVShows> {
   final tmdb = TMDB(
     ApiKeys('b5885260c7ceb67abd3e466068f303dc',
         'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNTg4NTI2MGM3Y2ViNjdhYmQzZTQ2NjA2OGYzMDNkYyIsInN1YiI6IjYzOTlkNjJjNzdjMDFmMDBjYTVjOWViZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Vi-Q2jc723p4jv2EStCaNIl4YxbyUCNtQvP8_WTn00A'),
-    logConfig: const ConfigLogger(
-      showLogs: true,
-      showErrorLogs: true,
-    ),
+    logConfig: const ConfigLogger.showNone(),
   );
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
@@ -32,17 +29,8 @@ class _TVShowsState extends State<TVShows> {
       listOfTVShows = result!['results'];
     });
   }
-
-  nextPage(int page) async {
-    listOfTVShows =[];
-    result = await tmdb.v3.tv.getPopular(page: page);
-    setState(() {
-      listOfTVShows = result!['results'];
-    });
-  }
-
-  previousPage(int page) async {
-    listOfTVShows =[];
+  browseTVShows(int page) async {
+    listOfTVShows = []; // make it empty first to auto scroll back to top
     result = await tmdb.v3.tv.getPopular(page: page);
     setState(() {
       listOfTVShows = result!['results'];
@@ -117,11 +105,15 @@ class _TVShowsState extends State<TVShows> {
                             builder: (context) =>
                                 Details(
                                   title: listOfTVShows[index]['name'],
-                                  backdrop: (listOfTVShows[index]['backdrop_path'])==null?'null':listOfTVShows[index]['backdrop_path'],
+                                  backdrop: listOfTVShows[index]['backdrop_path'],
                                   overview: listOfTVShows[index]['overview'],
                                   poster: listOfTVShows[index]['poster_path'],
                                   rate: listOfTVShows[index]['vote_average'].toStringAsFixed(2),
-                                  releaseOn: listOfTVShows[index]['first_air_date'],),),);
+                                  releaseOn: listOfTVShows[index]['first_air_date'],
+                                  id: listOfTVShows[index]['id'],
+                                  popularity: listOfTVShows[index]['popularity'],
+                                  type: 'tv',
+                                ),),);
                         },
                         child: Center(
                           child: Stack(
@@ -130,18 +122,16 @@ class _TVShowsState extends State<TVShows> {
                               SizedBox(
                                 height: 200,
                                 width: 117,
-                                child: Image.network(
-                                  tmdbImageUrl +
-                                      listOfTVShows[index]
-                                      ['poster_path'],
-                                  loadingBuilder: (context, child,
-                                      loadingProgress) {
+                                // check in the response list if the poster_path is null or not
+                                child: (listOfTVShows[index]['poster_path']!=null)?
+                                Image.network(tmdbImageUrl + listOfTVShows[index]['poster_path'],
+                                  loadingBuilder: (context, child, loadingProgress) {
                                     if (loadingProgress != null) {
                                       return const Center(child: CircularProgressIndicator());
                                     }
                                     return child;
                                   },
-                                ),
+                                ):const Image(image: AssetImage('assets/no_image_poster.png'),),
                               ),
                               Container(
                                 height: 20,
@@ -169,12 +159,14 @@ class _TVShowsState extends State<TVShows> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ElevatedButton(
+                        // previous page
                           onPressed: () {
+                            // page cannot be less or equals to 0
                             if(onPage>1){
                               setState(() {
                                 onPage=onPage-1;
-                                previousPage(onPage);
                               });
+                              browseTVShows(onPage);
                             }
                           },
                           child: const Icon(
@@ -186,11 +178,12 @@ class _TVShowsState extends State<TVShows> {
                         style: const TextStyle(fontSize: 26),
                       ),
                       ElevatedButton(
+                        // next page
                           onPressed: () {
                             setState(() {
                               onPage = onPage + 1;
-                              nextPage(onPage);
                             });
+                            browseTVShows(onPage);
                           },
                           child: const Icon(
                             Icons.navigate_next,

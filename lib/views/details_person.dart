@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'details.dart';
+import 'details_movie&tv.dart';
 
 
 class DetailsPerson extends StatelessWidget {
@@ -95,24 +95,24 @@ class DetailsPerson extends StatelessWidget {
                     onTap: () {
                       //Show details
                       FocusManager.instance.primaryFocus?.unfocus();
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) =>
-                        (played[index]['media_type']=='movie')
-                            ?Details( // media type is movie
-                          title: played[index]['title'],
-                          backdrop: (played[index]['backdrop_path'])==null?'null':played[index]['backdrop_path'],
-                          overview: played[index]['overview'],
-                          poster: played[index]['poster_path'],
-                          rate: played[index]['vote_average'].toStringAsFixed(2),
-                          releaseOn: played[index]['release_date'],)
-                            :Details( // media type is tv show
-                          title: played[index]['name'],
-                          backdrop: (played[index]['backdrop_path'])==null?'null':played[index]['backdrop_path'],
-                          overview: played[index]['overview'],
-                          poster: (played[index]['poster_path'])==null?'null':played[index]['poster_path'],
-                          rate: played[index]['vote_average'].toStringAsFixed(2),
-                          releaseOn: played[index]['first_air_date'],)
-                        ,),);
+                      // Navigator.push(context, MaterialPageRoute(
+                      //   builder: (context) =>
+                      //   (played[index]['media_type']=='movie')
+                      //       ?Details( // media type is movie
+                      //     title: played[index]['title'],
+                      //     backdrop: (played[index]['backdrop_path'])==null?'null':played[index]['backdrop_path'],
+                      //     overview: played[index]['overview'],
+                      //     poster: played[index]['poster_path'],
+                      //     rate: played[index]['vote_average'].toStringAsFixed(2),
+                      //     releaseOn: played[index]['release_date'],)
+                      //       :Details( // media type is tv show
+                      //     title: played[index]['name'],
+                      //     backdrop: (played[index]['backdrop_path'])==null?'null':played[index]['backdrop_path'],
+                      //     overview: played[index]['overview'],
+                      //     poster: (played[index]['poster_path'])==null?'null':played[index]['poster_path'],
+                      //     rate: played[index]['vote_average'].toStringAsFixed(2),
+                      //     releaseOn: played[index]['first_air_date'],)
+                      //   ,),);
                     },
                     child: Center(
                       child: Stack(

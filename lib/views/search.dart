@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_maniac/views/details_person.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-import 'details.dart';
+import 'details_movie&tv.dart';
 
 class SearchView extends StatefulWidget {
   // search keyword
@@ -20,6 +20,7 @@ class _SearchViewState extends State<SearchView> {
     ApiKeys('b5885260c7ceb67abd3e466068f303dc',
         'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNTg4NTI2MGM3Y2ViNjdhYmQzZTQ2NjA2OGYzMDNkYyIsInN1YiI6IjYzOTlkNjJjNzdjMDFmMDBjYTVjOWViZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.'
             'Vi-Q2jc723p4jv2EStCaNIl4YxbyUCNtQvP8_WTn00A'),
+      logConfig: const ConfigLogger.showNone(),
   );
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
@@ -67,7 +68,7 @@ class _SearchViewState extends State<SearchView> {
                    }
                    return child;
                  },
-                 ):const Image(image:AssetImage('assets/no_image.jpg')),
+                 ):const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
             ),
             const SizedBox(width: 20,),
             Flexible(
@@ -85,17 +86,17 @@ class _SearchViewState extends State<SearchView> {
                 ],),),
           ],),
         ),onTap: (){
-          // Show details
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) =>
-                Details(
-                  title: searchResult[i]['title'],
-                  backdrop: (searchResult[i]['backdrop_path'])==null?'null':searchResult[i]['backdrop_path'],
-                  overview: searchResult[i]['overview'],
-                  poster:  (searchResult[i]['poster_path'])==null?'null':searchResult[i]['poster_path'],
-                  rate: searchResult[i]['vote_average'].toStringAsFixed(2),
-                  releaseOn: (searchResult[i]['release_date']=='')?'null':searchResult[i]['release_date'],
-                ),),);
+          // // Show details
+          // Navigator.push(context, MaterialPageRoute(
+          //   builder: (context) =>
+          //       Details(
+          //         title: searchResult[i]['title'],
+          //         backdrop: searchResult[i]['backdrop_path'],
+          //         overview: searchResult[i]['overview'],
+          //         poster:  searchResult[i]['poster_path'],
+          //         rate: searchResult[i]['vote_average'].toStringAsFixed(2),
+          //         releaseOn: searchResult[i]['release_date'],
+          //       ),),);
         });
 
       case 'tv':
@@ -105,7 +106,7 @@ class _SearchViewState extends State<SearchView> {
             Container(
               height: 150,
               width: 100,
-              child: (searchResult[i]['poster_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path']):const Image(image:AssetImage('assets/no_image.jpg')),
+              child: (searchResult[i]['poster_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path']):const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
             ),
             const SizedBox(width: 20,),
             Flexible(
@@ -122,17 +123,17 @@ class _SearchViewState extends State<SearchView> {
                   const SizedBox(height: 8,),
                 ],),),
           ],),onTap: (){
-            // Show details
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) =>
-                  Details(
-                    title: searchResult[i]['name'],
-                    backdrop: (searchResult[i]['backdrop_path'])==null?'null':searchResult[i]['backdrop_path'],
-                    overview: searchResult[i]['overview'],
-                    poster:  (searchResult[i]['poster_path'])==null?'null':searchResult[i]['poster_path'],
-                    rate: searchResult[i]['vote_average'].toStringAsFixed(2),
-                    releaseOn: (searchResult[i]['first_air_date']=='')?'null':searchResult[i]['first_air_date'],
-                  ),),);
+            // // Show details
+            // Navigator.push(context, MaterialPageRoute(
+            //   builder: (context) =>
+            //       Details(
+            //         title: searchResult[i]['name'],
+            //         backdrop: searchResult[i]['backdrop_path'],
+            //         overview: searchResult[i]['overview'],
+            //         poster:  searchResult[i]['poster_path'],
+            //         rate: searchResult[i]['vote_average'].toStringAsFixed(2),
+            //         releaseOn: searchResult[i]['first_air_date'],
+            //       ),),);
           },),
         );
 
@@ -144,7 +145,7 @@ class _SearchViewState extends State<SearchView> {
             Container(
               height: 150,
               width: 100,
-              child: (searchResult[i]['profile_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['profile_path']):const Image(image:AssetImage('assets/no_image.jpg')),
+              child: (searchResult[i]['profile_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['profile_path']):const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
             ),
             const SizedBox(width: 20,),
             Flexible(
@@ -192,9 +193,8 @@ class _SearchViewState extends State<SearchView> {
       body: Padding(padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          // Center(child: Text('${searchResult.length} results'),),
-          // const SizedBox(height: 8,),
-          Expanded(child: (searchResult.isNotEmpty)?ListView.builder(
+          Expanded(
+            child: (searchResult.isNotEmpty)?ListView.builder(
             itemCount: searchResult.length,
             itemBuilder: (context, index) {
               return mediaType(searchResult[index]['media_type'],index);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../views/details.dart';
+import '../views/details_movie&tv.dart';
 
 class MovieUpcoming extends StatelessWidget {
   // Base URL for retrieving image
@@ -33,7 +32,6 @@ class MovieUpcoming extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: movieTopRatedList.length,
                 itemBuilder: (context, index) {
-
                     return Padding(
                       padding:
                       const EdgeInsets.fromLTRB(0, 0, 12, 0),
@@ -41,7 +39,6 @@ class MovieUpcoming extends StatelessWidget {
                         onTap: () {
                           // Show details
                           FocusManager.instance.primaryFocus?.unfocus();
-
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) =>
                                 Details(
@@ -50,7 +47,11 @@ class MovieUpcoming extends StatelessWidget {
                                   overview: movieTopRatedList[index]['overview'],
                                   poster: movieTopRatedList[index]['poster_path'],
                                   rate: movieTopRatedList[index]['vote_average'].toStringAsFixed(2),
-                                  releaseOn: movieTopRatedList[index]['release_date'],),),);
+                                  releaseOn: movieTopRatedList[index]['release_date'],
+                                  id: movieTopRatedList[index]['id'],
+                                  popularity: movieTopRatedList[index]['popularity'],
+                                  type: 'movie',
+                                ),),);
                         },
                         child: SizedBox(
                           width: 120,
@@ -59,21 +60,15 @@ class MovieUpcoming extends StatelessWidget {
                               Stack(
                                 alignment: Alignment.topRight,
                                 children: [
-                                  Image.network(
-                                    tmdbImageUrl +
-                                        movieTopRatedList[index]
-                                        ['poster_path'],
+                                  (movieTopRatedList[index]['poster_path']!=null)?
+                                  Image.network(tmdbImageUrl + movieTopRatedList[index]['poster_path'],
                                     fit: BoxFit.cover,
-                                    loadingBuilder: (context,
-                                        child, loadingProgress) {
-                                      if (loadingProgress !=
-                                          null) {
+                                    loadingBuilder: (context, child, loadingProgress) {
+                                      if (loadingProgress != null) {
                                         return Center(
                                           child: Column(
                                             children: const [
-                                              SizedBox(
-                                                height: 90,
-                                              ),
+                                              SizedBox(height: 90,),
                                               CircularProgressIndicator(),
                                               SizedBox(
                                                 height: 50,
@@ -84,7 +79,7 @@ class MovieUpcoming extends StatelessWidget {
                                       }
                                       return child;
                                     },
-                                  ),
+                                  ):const Image(image: AssetImage('assets/no_image_poster.png')),
                                   Container(
                                     height: 20,
                                     width: 48,

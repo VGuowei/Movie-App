@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../views/details.dart';
+import '../views/details_movie&tv.dart';
 
 class MovieTrend extends StatelessWidget {
   // Base URL for retrieving image
@@ -35,7 +35,6 @@ class MovieTrend extends StatelessWidget {
                       onTap: () {
                         // Show details
                         FocusManager.instance.primaryFocus?.unfocus();
-
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) =>
                               Details(
@@ -44,7 +43,11 @@ class MovieTrend extends StatelessWidget {
                                 overview: movieTrendList[index]['overview'],
                                 poster: movieTrendList[index]['poster_path'],
                                 rate: movieTrendList[index]['vote_average'].toStringAsFixed(2),
-                                releaseOn: movieTrendList[index]['release_date'],),),);
+                                releaseOn: movieTrendList[index]['release_date'],
+                                id: movieTrendList[index]['id'],
+                                popularity: movieTrendList[index]['popularity'],
+                                type: 'movie',
+                              ),),);
                       },
                       child: SizedBox(
                         width: 369,
@@ -53,17 +56,11 @@ class MovieTrend extends StatelessWidget {
                             Stack(
                               alignment: Alignment.topRight,
                               children: [
-                                (tmdbImageUrl +
-                                    movieTrendList[index]
-                                    ['backdrop_path']!=null)?Image.network(
-                                  tmdbImageUrl +
-                                      movieTrendList[index]
-                                      ['backdrop_path'],
+                                (movieTrendList[index]['backdrop_path']!=null)?
+                                Image.network(tmdbImageUrl + movieTrendList[index]['backdrop_path'],
                                   fit: BoxFit.cover,
-                                  loadingBuilder: (context,
-                                      child, loadingProgress) {
-                                    if (loadingProgress !=
-                                        null) {
+                                  loadingBuilder: (context, child, loadingProgress) {
+                                    if (loadingProgress != null) {
                                       return Center(
                                         child: SizedBox(
                                           width: 369,
@@ -83,7 +80,7 @@ class MovieTrend extends StatelessWidget {
                                     }
                                     return child;
                                   },
-                                ):  const Image(image: AssetImage('assets/no_image_220h.jpg')),
+                                ):  const Image(image: AssetImage('assets/no_image_backdrop.jpg')),
                                 Container(
                                   height: 20,
                                   width: 48,
