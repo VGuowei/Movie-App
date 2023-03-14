@@ -27,9 +27,31 @@ class Details extends StatelessWidget {
                 Positioned(
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                       child: (backdrop)!='null'?Image.network(
+                       child: (backdrop!=null)?Image.network(
                     tmdbImageUrl + backdrop,
                     fit: BoxFit.cover,
+                         loadingBuilder: (context, child, loadingProgress) {
+                           if (loadingProgress !=
+                               null) {
+                             return Center(
+                               child: SizedBox(
+                                 width: 369,
+                                 child: Column(
+                                   children: const [
+                                     SizedBox(
+                                       height: 90,
+                                     ),
+                                     CircularProgressIndicator(),
+                                     SizedBox(
+                                       height: 80,
+                                     )
+                                   ],
+                                 ),
+                               ),
+                             );
+                           }
+                           return child;
+                         },
                   ): const Padding(
                     padding: EdgeInsets.all(12),
                     child: Image(image: AssetImage('assets/no_image.jpg')),
@@ -59,9 +81,28 @@ class Details extends StatelessWidget {
             ,child: Container(
                   height: 150,
                   width: 120,
-                  child: (poster!='null')?Image.network(tmdbImageUrl + poster):const Image(image: AssetImage('assets/no_image.jpg')),
+                  child: (poster!=null)?Image.network(tmdbImageUrl + poster
+                  ,loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress !=
+                          null) {
+                        return Center(
+                          child: SizedBox(
+                            width: 120,
+                            child: Column(
+                              children: const [
+                                SizedBox(
+                                  height: 60,
+                                ),
+                                CircularProgressIndicator(),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                      return child;
+                  },
+                  ):const Image(image: AssetImage('assets/no_image.jpg')),
                 ),),
-              // const SizedBox(width: 24,),
               Flexible(
                 child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

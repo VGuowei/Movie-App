@@ -121,7 +121,7 @@ class _MovieViewState extends State<MovieView> {
                                     builder: (context) =>
                                         Details(
                                           title: listOfMovies[index]['title'],
-                                          backdrop: (listOfMovies[index]['backdrop_path'])==null?'null':listOfMovies[index]['backdrop_path'],
+                                          backdrop: listOfMovies[index]['backdrop_path'],
                                           overview: listOfMovies[index]['overview'],
                                           poster: listOfMovies[index]['poster_path'],
                                           rate: listOfMovies[index]['vote_average'].toStringAsFixed(2),
@@ -146,7 +146,7 @@ class _MovieViewState extends State<MovieView> {
                                     ),
                                     Container(
                                       height: 20,
-                                      width: 48,
+                                      width: 44,
                                       color: Colors.black54,
                                       child: Row(
                                         children: [
@@ -155,7 +155,7 @@ class _MovieViewState extends State<MovieView> {
                                             size: 20,
                                             color: Colors.yellow,
                                           ),
-                                          Text(listOfMovies[index]['vote_average'].toStringAsFixed(1))
+                                          Text(listOfMovies[index]['vote_average'].toStringAsFixed(1),style: TextStyle(fontSize: 11),)
                                         ],
                                       ),
                                     )
