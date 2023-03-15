@@ -86,17 +86,20 @@ class _SearchViewState extends State<SearchView> {
                 ],),),
           ],),
         ),onTap: (){
-          // // Show details
-          // Navigator.push(context, MaterialPageRoute(
-          //   builder: (context) =>
-          //       Details(
-          //         title: searchResult[i]['title'],
-          //         backdrop: searchResult[i]['backdrop_path'],
-          //         overview: searchResult[i]['overview'],
-          //         poster:  searchResult[i]['poster_path'],
-          //         rate: searchResult[i]['vote_average'].toStringAsFixed(2),
-          //         releaseOn: searchResult[i]['release_date'],
-          //       ),),);
+          // Show details
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) =>
+                Details(
+                  poster:  searchResult[i]['poster_path'],
+                  backdrop: searchResult[i]['backdrop_path'],
+                  title: searchResult[i]['title'],
+                  overview: searchResult[i]['overview'],
+                  rate: searchResult[i]['vote_average'].toStringAsFixed(2),
+                  releaseOn: searchResult[i]['release_date'],
+                  id: searchResult[i]['id'],
+                  popularity: searchResult[i]['popularity'],
+                  type: 'movie',
+                ),),);
         });
 
       case 'tv':
@@ -106,7 +109,8 @@ class _SearchViewState extends State<SearchView> {
             Container(
               height: 150,
               width: 100,
-              child: (searchResult[i]['poster_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path']):const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
+              child: (searchResult[i]['poster_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path']):
+              const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
             ),
             const SizedBox(width: 20,),
             Flexible(
@@ -123,17 +127,20 @@ class _SearchViewState extends State<SearchView> {
                   const SizedBox(height: 8,),
                 ],),),
           ],),onTap: (){
-            // // Show details
-            // Navigator.push(context, MaterialPageRoute(
-            //   builder: (context) =>
-            //       Details(
-            //         title: searchResult[i]['name'],
-            //         backdrop: searchResult[i]['backdrop_path'],
-            //         overview: searchResult[i]['overview'],
-            //         poster:  searchResult[i]['poster_path'],
-            //         rate: searchResult[i]['vote_average'].toStringAsFixed(2),
-            //         releaseOn: searchResult[i]['first_air_date'],
-            //       ),),);
+            // Show details
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) =>
+                  Details(
+                    poster:  searchResult[i]['poster_path'],
+                    backdrop: searchResult[i]['backdrop_path'],
+                    title: searchResult[i]['name'],
+                    overview: searchResult[i]['overview'],
+                    rate: searchResult[i]['vote_average'].toStringAsFixed(2),
+                    releaseOn: searchResult[i]['first_air_date'],
+                    id: searchResult[i]['id'],
+                    popularity: searchResult[i]['popularity'],
+                    type: 'tv',
+                  ),),);
           },),
         );
 

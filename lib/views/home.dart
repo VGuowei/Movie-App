@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movie_maniac/widgets/movieToprated.dart';
-import 'package:movie_maniac/widgets/movieTrend.dart';
-import 'package:movie_maniac/widgets/on_tv.dart';
-import 'package:movie_maniac/widgets/popularActors.dart';
 import 'package:tmdb_api/tmdb_api.dart';
+import '../home_widgets/movieToprated.dart';
+import '../home_widgets/movieTrend.dart';
+import '../home_widgets/on_tv.dart';
+import '../home_widgets/popularActors.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _HomeViewState extends State<HomeView> {
         'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNTg4NTI2MGM3Y2ViNjdhYmQzZTQ2NjA2OGYzMDNkYyIsInN1YiI6IjYzOTlkNjJjNzdjMDFmMDBjYTVjOWViZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.'
             'Vi-Q2jc723p4jv2EStCaNIl4YxbyUCNtQvP8_WTn00A'),
   );
-  //------------------------{ MOVIES }------------------------}
+  //------------------------{ MOVIES }------------------------//
   Map? movieTrendMap;
   List movieTrendList = [];
   getMovieTrend() async {
@@ -37,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
       movieTopRatedList = movieTopRatedMap!['results'];
     });
   }
-  //------------------------{ TV }------------------------}
+  //------------------------{ TV }------------------------//
   Map? tvTrendMap;
   List tvTrendList = [];
   getTvTrend() async {
@@ -47,7 +47,7 @@ class _HomeViewState extends State<HomeView> {
       tvTrendList = tvTrendMap!['results'];
     });
   }
-  //------------------------{ ACTORS }------------------------}
+  //------------------------{ ACTORS }------------------------//
   Map? popularActorMap;
   List popularActorList = [];
   getActors() async {

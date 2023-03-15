@@ -42,10 +42,10 @@ class MovieUpcoming extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) =>
                                 Details(
-                                  title: movieTopRatedList[index]['title'],
-                                  backdrop: (movieTopRatedList[index]['backdrop_path'])==null?'null':movieTopRatedList[index]['backdrop_path'],
-                                  overview: movieTopRatedList[index]['overview'],
+                                  backdrop: movieTopRatedList[index]['backdrop_path'],
                                   poster: movieTopRatedList[index]['poster_path'],
+                                  title: movieTopRatedList[index]['title'],
+                                  overview: movieTopRatedList[index]['overview'],
                                   rate: movieTopRatedList[index]['vote_average'].toStringAsFixed(2),
                                   releaseOn: movieTopRatedList[index]['release_date'],
                                   id: movieTopRatedList[index]['id'],

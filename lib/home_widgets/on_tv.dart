@@ -26,7 +26,7 @@ class OnTv extends StatelessWidget {
             ],
           ),
           Container(
-            height: 310,
+            height: 320,
             child: Scrollbar(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -39,16 +39,20 @@ class OnTv extends StatelessWidget {
                       onTap: () {
                         // Show details
                         FocusManager.instance.primaryFocus?.unfocus();
-                        //
-                        // Navigator.push(context, MaterialPageRoute(
-                        //   builder: (context) =>
-                        //       Details(
-                        //         title: onTv[index]['name'],
-                        //         backdrop: (onTv[index]['backdrop_path'])==null?'null':onTv[index]['backdrop_path'],
-                        //         overview: onTv[index]['overview'],
-                        //         poster: onTv[index]['poster_path'],
-                        //         rate: onTv[index]['vote_average'].toStringAsFixed(2),
-                        //         releaseOn: onTv[index]['first_air_date'],),),);
+
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) =>
+                              Details(
+                                poster: onTv[index]['poster_path'],
+                                backdrop: onTv[index]['backdrop_path'],
+                                title: onTv[index]['name'],
+                                overview: onTv[index]['overview'],
+                                rate: onTv[index]['vote_average'].toStringAsFixed(2),
+                                releaseOn: onTv[index]['first_air_date'],
+                                id: onTv[index]['id'],
+                                popularity: onTv[index]['popularity'],
+                                type: 'tv',
+                              ),),);
                       },
                       child: SizedBox(
                         width: 165,
@@ -57,20 +61,14 @@ class OnTv extends StatelessWidget {
                             Stack(
                               alignment: Alignment.topRight,
                               children: [
-                                Image.network(
-                                  tmdbImageUrl +
-                                      onTv[index]
-                                      ['poster_path'],
-                                  loadingBuilder: (context,
-                                      child, loadingProgress) {
-                                    if (loadingProgress !=
-                                        null) {
+                                (onTv[index]['poster_path']!=null)?
+                                Image.network(tmdbImageUrl + onTv[index]['poster_path'],
+                                  loadingBuilder: (context, child, loadingProgress) {
+                                    if (loadingProgress != null) {
                                       return Center(
                                         child: Column(
                                           children: const [
-                                            SizedBox(
-                                              height: 90,
-                                            ),
+                                            SizedBox(height: 90,),
                                             CircularProgressIndicator(),
                                             SizedBox(
                                               height: 110,
@@ -81,7 +79,8 @@ class OnTv extends StatelessWidget {
                                     }
                                     return child;
                                   },
-                                ),
+                                ):
+                                const Image(image: AssetImage('assets/no_image_poster.png')),
                                 Container(
                                   height: 20,
                                   width: 48,

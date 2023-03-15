@@ -8,7 +8,7 @@ class Details extends StatelessWidget {
   final String? poster, backdrop; // nullable
   final String  overview, title, rate, releaseOn,type;
   final int id;
-  final double popularity;
+  final double popularity; // actor's popularity
   const Details(
       {super.key,
       required this.poster,
@@ -121,7 +121,7 @@ class Details extends StatelessWidget {
                   const SizedBox(height: 14,),
                   (releaseOn!='')?Text('Release date:  $releaseOn',style: const TextStyle(fontSize: 16),):const Text('No release date'),
                   const SizedBox(height: 10,),
-                  Text('Popularity:  $popularity',style: const TextStyle(fontSize: 16),maxLines: 1),
+                  (popularity!=-1)?Text('Popularity:  $popularity',style: const TextStyle(fontSize: 16),maxLines: 1):Container(),
                   const SizedBox(height: 10,),
                   Text('Rating:  $rate / 10',style: const TextStyle(fontSize: 16),),
                   const SizedBox(height: 10,),
@@ -165,6 +165,7 @@ class _GetGenresState extends State<GetGenres> {
     else if(type=='tv'){
       result = await tmdb.v3.tv.getDetails(id);
     }
+
     setState(() {
       listOfGenres = result!['genres'];
     });

@@ -38,10 +38,10 @@ class MovieTrend extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) =>
                               Details(
-                                title: movieTrendList[index]['title'],
-                                backdrop: (movieTrendList[index]['backdrop_path'])==null?'null':movieTrendList[index]['backdrop_path'],
-                                overview: movieTrendList[index]['overview'],
                                 poster: movieTrendList[index]['poster_path'],
+                                backdrop: movieTrendList[index]['backdrop_path'],
+                                overview: movieTrendList[index]['overview'],
+                                title: movieTrendList[index]['title'],
                                 rate: movieTrendList[index]['vote_average'].toStringAsFixed(2),
                                 releaseOn: movieTrendList[index]['release_date'],
                                 id: movieTrendList[index]['id'],
@@ -50,7 +50,7 @@ class MovieTrend extends StatelessWidget {
                               ),),);
                       },
                       child: SizedBox(
-                        width: 369,
+                        width: 360,
                         child: Column(
                           children: [
                             Stack(
