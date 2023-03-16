@@ -47,8 +47,7 @@ class _SearchViewState extends State<SearchView> {
               width: 100,
                child: ((searchResult[i]['poster_path'])!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path'],
                  loadingBuilder: (context, child, loadingProgress) {
-                   if (loadingProgress !=
-                       null) {
+                   if (loadingProgress != null) {
                      return Center(
                        child: SizedBox(
                          width: 140,
@@ -58,9 +57,6 @@ class _SearchViewState extends State<SearchView> {
                                height: 50,
                              ),
                              CircularProgressIndicator(),
-                             SizedBox(
-                               height: 50,
-                             )
                            ],
                          ),
                        ),
@@ -109,8 +105,26 @@ class _SearchViewState extends State<SearchView> {
             SizedBox(
               height: 150,
               width: 100,
-              child: (searchResult[i]['poster_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path']):
-              const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
+              child: (searchResult[i]['poster_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path'],
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress != null) {
+                    return Center(
+                      child: SizedBox(
+                        width: 140,
+                        child: Column(
+                          children: const [
+                            SizedBox(
+                              height: 50,
+                            ),
+                            CircularProgressIndicator(),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return child;
+                },
+              ): const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
             ),
             const SizedBox(width: 20,),
             Flexible(
@@ -152,7 +166,26 @@ class _SearchViewState extends State<SearchView> {
             SizedBox(
               height: 150,
               width: 100,
-              child: (searchResult[i]['profile_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['profile_path']):const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
+              child: (searchResult[i]['profile_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['profile_path'],
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress != null) {
+                    return Center(
+                      child: SizedBox(
+                        width: 140,
+                        child: Column(
+                          children: const [
+                            SizedBox(
+                              height: 50,
+                            ),
+                            CircularProgressIndicator(),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return child;
+                },
+              ):const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
             ),
             const SizedBox(width: 20,),
             Flexible(

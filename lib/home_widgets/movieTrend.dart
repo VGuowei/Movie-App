@@ -56,31 +56,31 @@ class MovieTrend extends StatelessWidget {
                             Stack(
                               alignment: Alignment.topRight,
                               children: [
-                                (movieTrendList[index]['backdrop_path']!=null)?
-                                Image.network(tmdbImageUrl + movieTrendList[index]['backdrop_path'],
-                                  fit: BoxFit.cover,
-                                  loadingBuilder: (context, child, loadingProgress) {
-                                    if (loadingProgress != null) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 344,
-                                          child: Column(
-                                            children: const [
-                                              SizedBox(
-                                                height: 90,
-                                              ),
-                                              CircularProgressIndicator(),
-                                              SizedBox(
-                                                height: 80,
-                                              )
-                                            ],
+                                Container(
+                                  height:194,
+                                  child: (movieTrendList[index]['backdrop_path']!=null)?
+                                  Image.network(tmdbImageUrl + movieTrendList[index]['backdrop_path'],
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (context, child, loadingProgress) {
+                                      if (loadingProgress != null) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 344,
+                                            child: Column(
+                                              children: const [
+                                                SizedBox(
+                                                  height: 90,
+                                                ),
+                                                CircularProgressIndicator(),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    }
-                                    return child;
-                                  },
-                                ):  const Image(image: AssetImage('assets/no_image_backdrop.jpg')),
+                                        );
+                                      }
+                                      return child;
+                                    },
+                                  ):  const Image(image: AssetImage('assets/no_image_backdrop.jpg')),
+                                ),
                                 Container(
                                   height: 20,
                                   width: 48,

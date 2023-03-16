@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_maniac/views/search.dart';
 import 'package:movie_maniac/views/tv.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:shake/shake.dart';
 import 'views/movie.dart';
 import 'views/home.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -19,16 +21,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          brightness: Brightness.dark,
-          primarySwatch: Colors.grey,
-          primaryColor: Colors.blue,
-          fontFamily: GoogleFonts.robotoFlex().fontFamily,
-      ),
-      home: const MainView(),
-    );
+    return OverlaySupport.global(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            brightness: Brightness.dark,
+            primarySwatch: Colors.grey,
+            primaryColor: Colors.blue,
+            fontFamily: GoogleFonts.robotoFlex().fontFamily,
+          ),
+          home: const MainView(),
+    ));
   }
 }
 
@@ -40,6 +43,8 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
+  // variable that store the internet connection status
+  bool hasInternet=false;
   // search keyword
   final searchController=TextEditingController();
   // widgets to swap in the body of Scaffold
@@ -63,6 +68,11 @@ class _MainViewState extends State<MainView> {
 
   @override
   void initState() {
+    super.initState();
+    InternetConnectionChecker().onStatusChange.listen((status){
+      final hasInternet=status==InternetConnectionStatus.connected;
+      setState(()=>this.hasInternet=hasInternet);
+    });
     detector=ShakeDetector.autoStart(
     onPhoneShake: () {
     // Do stuff on phone shake
@@ -73,7 +83,6 @@ class _MainViewState extends State<MainView> {
       shakeCountResetTime: 3000,
       shakeThresholdGravity: 2.0,
     );
-    super.initState();
   }
 
   @override
@@ -111,17 +120,17 @@ class _MainViewState extends State<MainView> {
                   },
                 ),
               ),
-              actions:  [
-                IconButton(padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                  icon: const Icon(
-                    Icons.menu,
-                  ),
-                  onPressed: () {
-                  //TODO add setting menu
-
-                  },
-                ),
-              ],
+              // actions:  [
+              //   IconButton(padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+              //     icon: const Icon(
+              //       Icons.menu,
+              //     ),
+              //     onPressed: () {
+              //     //TODO add setting menu
+              //
+              //     },
+              //   ),
+              // ],
             ),
           ],
           body: views[currentView],
@@ -140,6 +149,26 @@ class _MainViewState extends State<MainView> {
             });
           },
           selectedIndex: currentView,
+        ),
+        endDrawer: Drawer(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24,48,24,24),
+            child: Column(
+              children: [
+                Text('Movie Maniac',style: GoogleFonts.aBeeZee(fontSize: 28,fontWeight: FontWeight.bold,color: Colors.redAccent)),
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Status: ',style: GoogleFonts.robotoMono(fontSize: 16)),
+                  hasInternet?Text('Online',style: GoogleFonts.robotoMono(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.green))
+                      :Text('Offline',style: GoogleFonts.robotoMono(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.grey)),
+                ],),
+                const Divider(color: Colors.yellow,thickness: 1,height: 40,)
+
+              ],
+            ),
+          ),
         ),
       ),
     );

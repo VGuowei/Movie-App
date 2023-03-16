@@ -39,7 +39,6 @@ class OnTv extends StatelessWidget {
                       onTap: () {
                         // Show details
                         FocusManager.instance.primaryFocus?.unfocus();
-
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) =>
                               Details(
@@ -61,26 +60,26 @@ class OnTv extends StatelessWidget {
                             Stack(
                               alignment: Alignment.topRight,
                               children: [
-                                (onTv[index]['poster_path']!=null)?
-                                Image.network(tmdbImageUrl + onTv[index]['poster_path'],
-                                  loadingBuilder: (context, child, loadingProgress) {
-                                    if (loadingProgress != null) {
-                                      return Center(
-                                        child: Column(
-                                          children: const [
-                                            SizedBox(height: 90,),
-                                            CircularProgressIndicator(),
-                                            SizedBox(
-                                              height: 110,
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                    return child;
-                                  },
-                                ):
-                                const Image(image: AssetImage('assets/no_image_poster.png')),
+                                Container(
+                                  height:248,
+                                  child: (onTv[index]['poster_path']!=null)?
+                                  Image.network(tmdbImageUrl + onTv[index]['poster_path'],
+                                    loadingBuilder: (context, child, loadingProgress) {
+                                      if (loadingProgress != null) {
+                                        return Center(
+                                          child: Column(
+                                            children: const [
+                                              SizedBox(height: 108,),
+                                              CircularProgressIndicator(),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                      return child;
+                                    },
+                                  ):
+                                  const Image(image: AssetImage('assets/no_image_poster.png')),
+                                ),
                                 Container(
                                   height: 20,
                                   width: 48,

@@ -60,26 +60,26 @@ class MovieUpcoming extends StatelessWidget {
                               Stack(
                                 alignment: Alignment.topRight,
                                 children: [
-                                  (movieTopRatedList[index]['poster_path']!=null)?
-                                  Image.network(tmdbImageUrl + movieTopRatedList[index]['poster_path'],
-                                    fit: BoxFit.cover,
-                                    loadingBuilder: (context, child, loadingProgress) {
-                                      if (loadingProgress != null) {
-                                        return Center(
-                                          child: Column(
-                                            children: const [
-                                              SizedBox(height: 90,),
-                                              CircularProgressIndicator(),
-                                              SizedBox(
-                                                height: 50,
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      }
-                                      return child;
-                                    },
-                                  ):const Image(image: AssetImage('assets/no_image_poster.png')),
+                                  Container(
+                                     height: 180,
+                                    child: (movieTopRatedList[index]['poster_path']!=null)?
+                                    Image.network(tmdbImageUrl + movieTopRatedList[index]['poster_path'],
+                                      fit: BoxFit.cover,
+                                      loadingBuilder: (context, child, loadingProgress) {
+                                        if (loadingProgress != null) {
+                                          return Center(
+                                            child: Column(
+                                              children: const [
+                                                SizedBox(height: 90,),
+                                                CircularProgressIndicator(),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                        return child;
+                                      },
+                                    ):const Image(image: AssetImage('assets/no_image_poster.png')),
+                                  ),
                                   Container(
                                     height: 20,
                                     width: 48,
