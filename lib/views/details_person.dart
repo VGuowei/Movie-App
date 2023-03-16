@@ -47,12 +47,12 @@ class DetailsPerson extends StatelessWidget {
                       return child;
                   },
                   ),):
-                  Container(
+                  const SizedBox(
                     height: 280,
-                    child: const Image(image: AssetImage('assets/no_image_poster.png')),),
+                    child: Image(image: AssetImage('assets/no_image_poster.png')),),
                   Column(
                     children: [
-                      Container(
+                      SizedBox(
                         width: 140,
                         child: Text(name,style: GoogleFonts.openSans(fontSize: 20,fontWeight: FontWeight.w500),maxLines: 3,),),
                       const SizedBox(height: 50,),

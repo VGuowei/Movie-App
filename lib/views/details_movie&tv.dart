@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tmdb_api/tmdb_api.dart';
@@ -29,7 +27,7 @@ class Details extends StatelessWidget {
     return Scaffold(
       body: ListView(
         children: [
-          Container(
+          SizedBox(
             height: 230,
             child: Stack(
               children: [
@@ -87,7 +85,7 @@ class Details extends StatelessWidget {
           Row(
             children: [
             Padding(padding: const EdgeInsets.fromLTRB(8, 8, 12, 12)
-            ,child: Container(
+            ,child: SizedBox(
                   height: 160,
                   width: 120,
                 // check the poster is null or not

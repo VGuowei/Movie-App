@@ -26,7 +26,7 @@ class PopularActors extends StatelessWidget {
               ),
             ],
           ),
-          Container(
+          SizedBox(
             height: 220,
             child: Scrollbar(
               child: ListView.builder(
@@ -53,34 +53,32 @@ class PopularActors extends StatelessWidget {
                         width: 100,
                         child: Column(
                           children: [
-                            Container(
-                              child:  ClipRRect(borderRadius: BorderRadius.circular(30.0),
-                              child: Image.network(
-                                tmdbImageUrl +
-                                    actors[index]
-                                    ['profile_path'], fit: BoxFit.cover,
-                                loadingBuilder: (context,
-                                    child, loadingProgress) {
-                                  if (loadingProgress !=
-                                      null) {
-                                    return Center(
-                                      child: Column(
-                                        children: const [
-                                          SizedBox(
-                                            height: 60,
-                                          ),
-                                          CircularProgressIndicator(),
-                                          SizedBox(
-                                            height: 50,
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  return child;
-                                },
-                              ),
-                              ),
+                            ClipRRect(borderRadius: BorderRadius.circular(30.0),
+                            child: Image.network(
+                              tmdbImageUrl +
+                                  actors[index]
+                                  ['profile_path'], fit: BoxFit.cover,
+                              loadingBuilder: (context,
+                                  child, loadingProgress) {
+                                if (loadingProgress !=
+                                    null) {
+                                  return Center(
+                                    child: Column(
+                                      children: const [
+                                        SizedBox(
+                                          height: 60,
+                                        ),
+                                        CircularProgressIndicator(),
+                                        SizedBox(
+                                          height: 50,
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                }
+                                return child;
+                              },
+                            ),
                             ),
                             Padding(
                                 padding:

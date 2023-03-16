@@ -25,7 +25,7 @@ class MovieUpcoming extends StatelessWidget {
               ),
             ],
           ),
-          Container(
+          SizedBox(
             height: 250,
             child: Scrollbar(
               child: ListView.builder(

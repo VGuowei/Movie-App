@@ -39,6 +39,8 @@ dependencies:
   json_annotation: ^4.8.0
   tmdb_api: ^2.1.4
   google_fonts: ^4.0.3
+  shake: ^2.2.0
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

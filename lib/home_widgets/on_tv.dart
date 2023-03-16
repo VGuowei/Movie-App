@@ -25,7 +25,7 @@ class OnTv extends StatelessWidget {
               ),
             ],
           ),
-          Container(
+          SizedBox(
             height: 320,
             child: Scrollbar(
               child: ListView.builder(

@@ -12,7 +12,7 @@ class MovieTrend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+      padding: const EdgeInsets.fromLTRB(11, 0, 11, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,7 +21,7 @@ class MovieTrend extends StatelessWidget {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 10,),
-          Container(
+          SizedBox(
             height: 280,
             child: Scrollbar(
               child: ListView.builder(
@@ -30,7 +30,7 @@ class MovieTrend extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding:
-                    const EdgeInsets.fromLTRB(0, 4, 12, 0),
+                    const EdgeInsets.fromLTRB(0,4, 10, 0),
                     child: InkWell(
                       onTap: () {
                         // Show details
@@ -50,7 +50,7 @@ class MovieTrend extends StatelessWidget {
                               ),),);
                       },
                       child: SizedBox(
-                        width: 360,
+                        width: 344,
                         child: Column(
                           children: [
                             Stack(
@@ -63,7 +63,7 @@ class MovieTrend extends StatelessWidget {
                                     if (loadingProgress != null) {
                                       return Center(
                                         child: SizedBox(
-                                          width: 369,
+                                          width: 344,
                                           child: Column(
                                             children: const [
                                               SizedBox(
@@ -104,7 +104,7 @@ class MovieTrend extends StatelessWidget {
                             ),
                             Padding(
                                 padding:
-                                const EdgeInsets.all(10),
+                                const EdgeInsets.fromLTRB(10,14,10,10),
                                 child: Text(
                                   movieTrendList[index]
                                   ['title'],

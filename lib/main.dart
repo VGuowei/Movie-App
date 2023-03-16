@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_maniac/views/search.dart';
 import 'package:movie_maniac/views/tv.dart';
+import 'package:shake/shake.dart';
 import 'views/movie.dart';
 import 'views/home.dart';
 
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           brightness: Brightness.dark,
           primarySwatch: Colors.grey,
+          primaryColor: Colors.blue,
           fontFamily: GoogleFonts.robotoFlex().fontFamily,
       ),
       home: const MainView(),
@@ -47,6 +50,37 @@ class _MainViewState extends State<MainView> {
        TVShows(),
        HomeView(),
   ];
+  // declare sensor detector
+  late ShakeDetector detector;
+  // this function it's for android platform
+  exitOnShake(){
+    setState(() {
+      if(Platform.isAndroid){
+        SystemNavigator.pop();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    detector=ShakeDetector.autoStart(
+    onPhoneShake: () {
+    // Do stuff on phone shake
+      exitOnShake();
+    },
+      minimumShakeCount: 1,
+      shakeSlopTimeMS: 500,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.0,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    detector.stopListening();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -42,7 +42,7 @@ class _SearchViewState extends State<SearchView> {
         return InkWell(child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Row(children: [
-            Container(
+            SizedBox(
               height: 150,
               width: 100,
                child: ((searchResult[i]['poster_path'])!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path'],
@@ -106,7 +106,7 @@ class _SearchViewState extends State<SearchView> {
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: InkWell(child: Row(children: [
-            Container(
+            SizedBox(
               height: 150,
               width: 100,
               child: (searchResult[i]['poster_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['poster_path']):
@@ -149,7 +149,7 @@ class _SearchViewState extends State<SearchView> {
           padding: const EdgeInsets.all(10.0),
           child: InkWell(child:
           Row(children: [
-            Container(
+            SizedBox(
               height: 150,
               width: 100,
               child: (searchResult[i]['profile_path']!=null)?Image.network(tmdbImageUrl+searchResult[i]['profile_path']):const Image(image:AssetImage('assets/no_image_backdrop.jpg')),
