@@ -1,10 +1,10 @@
 import 'dart:io';
+import 'package:connection_notifier/connection_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_maniac/views/search.dart';
 import 'package:movie_maniac/views/tv.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:shake/shake.dart';
 import 'views/movie.dart';
 import 'views/home.dart';
@@ -21,17 +21,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OverlaySupport.global(
+    return ConnectionNotifier(
+      disconnectedText: 'No Internet Connection',
+      hasIndicationIcon: false,
+        height: 34,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             brightness: Brightness.dark,
             primarySwatch: Colors.grey,
-            primaryColor: Colors.blue,
             fontFamily: GoogleFonts.robotoFlex().fontFamily,
           ),
           home: const MainView(),
-    ));
+      ),
+    );
   }
 }
 
@@ -120,17 +123,6 @@ class _MainViewState extends State<MainView> {
                   },
                 ),
               ),
-              // actions:  [
-              //   IconButton(padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-              //     icon: const Icon(
-              //       Icons.menu,
-              //     ),
-              //     onPressed: () {
-              //     //TODO add setting menu
-              //
-              //     },
-              //   ),
-              // ],
             ),
           ],
           body: views[currentView],
@@ -149,26 +141,6 @@ class _MainViewState extends State<MainView> {
             });
           },
           selectedIndex: currentView,
-        ),
-        endDrawer: Drawer(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24,48,24,24),
-            child: Column(
-              children: [
-                Text('Movie Maniac',style: GoogleFonts.aBeeZee(fontSize: 28,fontWeight: FontWeight.bold,color: Colors.redAccent)),
-                const SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Status: ',style: GoogleFonts.robotoMono(fontSize: 16)),
-                  hasInternet?Text('Online',style: GoogleFonts.robotoMono(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.green))
-                      :Text('Offline',style: GoogleFonts.robotoMono(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.grey)),
-                ],),
-                const Divider(color: Colors.yellow,thickness: 1,height: 40,)
-
-              ],
-            ),
-          ),
         ),
       ),
     );

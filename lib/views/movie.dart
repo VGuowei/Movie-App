@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_maniac/views/details_movie&tv.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
@@ -18,32 +19,24 @@ class _MovieViewState extends State<MovieView> {
   );
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
+  // default filter genre is none
+  String genre='';
 
   Map? result;
   int onPage = 1;
-  List listOfMovies =[];
+  late List listOfMovies;
 
-  getMovies() async {
-    result = await tmdb.v3.movies.getPopular(page: onPage);
+  getMovies(int page,String selectedGenre) async {
+    listOfMovies = []; // make it empty first to auto shrink back to top
+    result = await tmdb.v3.discover.getMovies(page: onPage,sortBy: SortMoviesBy.popularityDesc,withGenres: selectedGenre);
     setState(() {
       listOfMovies = result!['results'];
     });
-  }
-  browseMovies(int page) async {
-    listOfMovies = []; // make it empty first to auto scroll back to top
-    result = await tmdb.v3.movies.getPopular(page: page);
-    setState(() {
-      listOfMovies = result!['results'];
-    });
-  }
-
-  getGenres(int id) async{
-
   }
 
   @override
   void initState() {
-    getMovies();
+    getMovies(onPage,genre);
     super.initState();
   }
 
@@ -58,17 +51,180 @@ class _MovieViewState extends State<MovieView> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(16, 0, 0, 18),
-                  child: Text(
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children:  [
+                  const Text(
                     'Popular Movies',
                     style:
                         TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
+                  IconButton(
+                      onPressed: (){
+                      showDialog(
+                        context: context,
+                        builder: (context) =>  AlertDialog(
+                          title: const Text('Select one Filter',style: TextStyle(fontWeight: FontWeight.bold)),
+                          content:Wrap(
+                            children: [
+                              TextButton(
+                              onPressed: (){
+                               setState(() {
+                                 onPage=1; // reset the page regardless
+                                 genre='28'; // Action id is 28
+                                 getMovies(onPage, genre);
+                               });
+                               Navigator.pop(context);
+                              },
+                              child: Container(
+                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.indigoAccent),
+                               padding: const EdgeInsets.all(8),
+                               height: 36,
+                               child: Text('Action',style: GoogleFonts.robotoMono(fontSize: 12,color: Colors.white)),),
+                            ),
+                              TextButton(
+                                onPressed: (){
+                                  setState(() {
+                                    onPage=1; // reset the page regardless
+                                    genre='12'; // Adventure id is 12
+                                    getMovies(onPage, genre);
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.indigoAccent),
+                                  padding: const EdgeInsets.all(8),
+                                  height: 36,
+                                  child: Text('Adventure',style: GoogleFonts.robotoMono(fontSize: 12,color: Colors.white)),),
+                              ),
+                              TextButton(
+                                onPressed: (){
+                                  setState(() {
+                                    onPage=1; // reset the page regardless
+                                    genre='16'; // Animation id is 16
+                                    getMovies(onPage, genre);
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.indigoAccent),
+                                  padding: const EdgeInsets.all(8),
+                                  height: 36,
+                                  child: Text('Animation',style: GoogleFonts.robotoMono(fontSize: 12,color: Colors.white)),),
+                              ),
+                              TextButton(
+                                onPressed: (){
+                                  setState(() {
+                                    onPage=1; // reset the page regardless
+                                    genre='35'; // Comedy id is 35
+                                    getMovies(onPage, genre);
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.indigoAccent),
+                                  padding: const EdgeInsets.all(8),
+                                  height: 36,
+                                  child: Text('Comedy',style: GoogleFonts.robotoMono(fontSize: 12,color: Colors.white)),),
+                              ),
+                              TextButton(
+                                onPressed: (){
+                                  setState(() {
+                                    onPage=1; // reset the page regardless
+                                    genre='18'; // Drama id is 18
+                                    getMovies(onPage, genre);
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.indigoAccent),
+                                  padding: const EdgeInsets.all(8),
+                                  height: 36,
+                                  child: Text('Drama',style: GoogleFonts.robotoMono(fontSize: 12,color: Colors.white)),),
+                              ),
+                              TextButton(
+                                onPressed: (){
+                                  setState(() {
+                                    onPage=1; // reset the page regardless
+                                    genre='14'; // Fantasy id is 14
+                                    getMovies(onPage, genre);
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.indigoAccent),
+                                  padding: const EdgeInsets.all(8),
+                                  height: 36,
+                                  child: Text('Fantasy',style: GoogleFonts.robotoMono(fontSize: 12,color: Colors.white)),),
+                              ),
+                              TextButton(
+                                onPressed: (){
+                                  setState(() {
+                                    onPage=1; // reset the page regardless
+                                    genre='27'; // Horror id is 27
+                                    getMovies(onPage, genre);
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.indigoAccent),
+                                  padding: const EdgeInsets.all(8),
+                                  height: 36,
+                                  child: Text('Horror',style: GoogleFonts.robotoMono(fontSize: 12,color: Colors.white)),),
+                              ),
+                              TextButton(
+                                onPressed: (){
+                                  setState(() {
+                                    onPage=1; // reset the page regardless
+                                    genre='9648'; // Mystery id is 9648
+                                    getMovies(onPage, genre);
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.indigoAccent),
+                                  padding: const EdgeInsets.all(8),
+                                  height: 36,
+                                  child: Text('Mystery',style: GoogleFonts.robotoMono(fontSize: 12,color: Colors.white)),),
+                              ),
+                              TextButton(
+                                onPressed: (){
+                                  setState(() {
+                                    onPage=1; // reset the page regardless
+                                    genre='10749'; // Romance id is 10749
+                                    getMovies(onPage, genre);
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.indigoAccent),
+                                  padding: const EdgeInsets.all(8),
+                                  height: 36,
+                                  child: Text('Romance',style: GoogleFonts.robotoMono(fontSize: 12,color: Colors.white)),),
+                              ),
+                            ],
+                          ),
+                        actions: [
+                          TextButton(
+                              onPressed: (){
+                                setState(() {
+                                  //set to default
+                                  onPage=1;
+                                  genre='';
+                                  getMovies(onPage, genre);
+                                });
+                                Navigator.pop(context);
+                              },
+                            child: const Text('Set to default',style: TextStyle(color: Colors.white))),
+                        ],
+                        ),
+                      );
+                    }
+                    ,icon: const Icon(Icons.filter_alt,size: 28,))
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
@@ -166,12 +322,12 @@ class _MovieViewState extends State<MovieView> {
                             ElevatedButton(
                               // previous page
                                 onPressed: () {
-                                  // page cannot be <= 0
+                                  // page cannot be less or equals to 0
                                   if(onPage>1){
                                     setState(() {
                                       onPage=onPage-1;
                                     });
-                                    browseMovies(onPage);
+                                    getMovies(onPage,genre);
                                   }
                                 },
                                 child: const Icon(
@@ -185,10 +341,13 @@ class _MovieViewState extends State<MovieView> {
                             ElevatedButton(
                               // next page
                                 onPressed: () {
-                                  setState(() {
-                                    onPage = onPage + 1;
-                                  });
-                                  browseMovies(onPage);
+                                  // checks first if current page is less than the total_pages of the API call
+                                  if(onPage<result!['total_pages']){
+                                    setState(() {
+                                      onPage=onPage+1;
+                                    });
+                                    getMovies(onPage,genre);
+                                  }
                                 },
                                 child: const Icon(
                                   Icons.navigate_next,
