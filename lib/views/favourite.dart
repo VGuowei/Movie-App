@@ -52,7 +52,7 @@ class _FavoriteViewState extends State<FavoriteView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:  [
                 Text(
-                  (username==null)?'Welcome':'Hello $username !',
+                  (username==null)?'Welcome !':'Hello $username',
                   style:
                   const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
@@ -75,15 +75,7 @@ class _FavoriteViewState extends State<FavoriteView> {
                                   Navigator.pop(context);
                                 },
                                 child: const Text('CANCEL',style: TextStyle(color: Colors.white))),
-                            TextButton(
-                                onPressed: (){
-                                  setState(() {
-                                    username=null;
-                                  });
-                                  usernameController.clear();
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('NULL',style: TextStyle(color: Colors.white))),
+                            const SizedBox(width: 20),
                             TextButton(
                                 onPressed: (){
                                   ref.update({'username':usernameController.text});
