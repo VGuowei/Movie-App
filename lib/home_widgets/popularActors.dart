@@ -1,13 +1,17 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../views/details_person.dart';
 
 
 
 class PopularActors extends StatelessWidget {
-  const PopularActors({Key? key, required this.actors}) : super(key: key);
+  PopularActors({Key? key, required this.actors}) : super(key: key);
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
   final List actors;
+  // Get a DatabaseReference
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +52,20 @@ class PopularActors extends StatelessWidget {
                               played: actors[index]['known_for'],
                             ),),);
                       },
+                      onDoubleTap: () {
+                        ref.child('favorite/${actors[index]['id']}').update({
+                          'title':actors[index]['name'],
+                          'imageURL':'$tmdbImageUrl${actors[index]['profile_path']}'
+                        });
+                        AnimatedSnackBar.material(
+                          'Added to Favorites',
+                          snackBarStrategy: RemoveSnackBarStrategy(),
+                          borderRadius: const BorderRadius.all(Radius.circular(30)),
+                          duration: const Duration(seconds: 2),
+                          type: AnimatedSnackBarType.success,
+                          mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                        ).show(context);
+                      },
                       child: SizedBox(
                         width: 100,
                         child: Column(
@@ -55,7 +73,7 @@ class PopularActors extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(30.0),
                               child:
-                              Container(
+                              SizedBox(
                                 height: 150,
                                   child: Image.network(tmdbImageUrl + actors[index]['profile_path'],
                                     fit: BoxFit.cover,

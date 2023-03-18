@@ -1,13 +1,15 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
 import '../views/details_movie&tv.dart';
 
 class MovieTrend extends StatelessWidget {
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
   final List movieTrendList;
-
-  const MovieTrend({Key? key, required this.movieTrendList}) : super(key: key);
+  MovieTrend({Key? key, required this.movieTrendList}) : super(key: key);
+  // Get a DatabaseReference
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,20 @@ class MovieTrend extends StatelessWidget {
                                 popularity: movieTrendList[index]['popularity'],
                                 type: 'movie',
                               ),),);
+                      },
+                      onDoubleTap: () {
+                        ref.child('favorite/${movieTrendList[index]['id']}').update({
+                          'title':movieTrendList[index]['title'],
+                          'imageURL':'$tmdbImageUrl${movieTrendList[index]['poster_path']}'
+                        });
+                        AnimatedSnackBar.material(
+                          'Added to Favorites',
+                          snackBarStrategy: RemoveSnackBarStrategy(),
+                          borderRadius: const BorderRadius.all(Radius.circular(30)),
+                          duration: const Duration(seconds: 2),
+                          type: AnimatedSnackBarType.success,
+                          mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                        ).show(context);
                       },
                       child: SizedBox(
                         width: 344,

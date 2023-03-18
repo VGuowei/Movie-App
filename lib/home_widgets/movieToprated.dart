@@ -1,3 +1,5 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../views/details_movie&tv.dart';
 
@@ -5,8 +7,9 @@ class MovieUpcoming extends StatelessWidget {
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
   final List movieTopRatedList;
-
-  const MovieUpcoming({Key? key, required this.movieTopRatedList}) : super(key: key);
+  // Get a DatabaseReference
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
+  MovieUpcoming({Key? key, required this.movieTopRatedList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +55,20 @@ class MovieUpcoming extends StatelessWidget {
                                   popularity: movieTopRatedList[index]['popularity'],
                                   type: 'movie',
                                 ),),);
+                        },
+                        onDoubleTap: () {
+                          ref.child('favorite/${movieTopRatedList[index]['id']}').update({
+                            'title':movieTopRatedList[index]['title'],
+                            'imageURL':'$tmdbImageUrl${movieTopRatedList[index]['poster_path']}'
+                          });
+                          AnimatedSnackBar.material(
+                            'Added to Favorites',
+                            snackBarStrategy: RemoveSnackBarStrategy(),
+                            borderRadius: const BorderRadius.all(Radius.circular(30)),
+                            duration: const Duration(seconds: 2),
+                            type: AnimatedSnackBarType.success,
+                            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                          ).show(context);
                         },
                         child: SizedBox(
                           width: 120,

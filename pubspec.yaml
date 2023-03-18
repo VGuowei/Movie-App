@@ -42,6 +42,9 @@ dependencies:
   shake: ^2.2.0
   internet_connection_checker: ^1.0.0+1
   connection_notifier: ^1.0.1
+  firebase_core: ^2.8.0
+  firebase_database: ^10.0.16
+  animated_snack_bar: ^0.3.0
 
 dev_dependencies:
   flutter_test:

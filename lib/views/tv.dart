@@ -1,3 +1,5 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_maniac/views/details_movie&tv.dart';
 import 'package:tmdb_api/tmdb_api.dart';
@@ -18,6 +20,8 @@ class _TVShowsState extends State<TVShows> {
   );
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
+  // Get a DatabaseReference
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   Map? result;
   int onPage = 1;
@@ -100,7 +104,6 @@ class _TVShowsState extends State<TVShows> {
                         onTap: () {
                           // Show details
                           FocusManager.instance.primaryFocus?.unfocus();
-
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) =>
                                 Details(
@@ -114,6 +117,20 @@ class _TVShowsState extends State<TVShows> {
                                   popularity: listOfTVShows[index]['popularity'],
                                   type: 'tv',
                                 ),),);
+                        },
+                        onDoubleTap: () {
+                          ref.child('favorite/${listOfTVShows[index]['id']}').update({
+                            'title':listOfTVShows[index]['name'],
+                            'imageURL':'$tmdbImageUrl${listOfTVShows[index]['poster_path']}'
+                          });
+                          AnimatedSnackBar.material(
+                            'Added to Favorites',
+                            snackBarStrategy: RemoveSnackBarStrategy(),
+                            borderRadius: const BorderRadius.all(Radius.circular(30)),
+                            duration: const Duration(seconds: 2),
+                            type: AnimatedSnackBarType.success,
+                            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                          ).show(context);
                         },
                         child: Center(
                           child: Stack(

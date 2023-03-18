@@ -1,12 +1,15 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
 import '../views/details_movie&tv.dart';
 
 class OnTv extends StatelessWidget {
-  const OnTv({Key? key,required this.onTv}) : super(key: key);
+  OnTv({Key? key,required this.onTv}) : super(key: key);
   // Base URL for retrieving image
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
   final List onTv;
+  // Get a DatabaseReference
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +55,20 @@ class OnTv extends StatelessWidget {
                                 popularity: onTv[index]['popularity'],
                                 type: 'tv',
                               ),),);
+                      },
+                      onDoubleTap: () {
+                        ref.child('favorite/${onTv[index]['id']}').update({
+                          'title':onTv[index]['name'],
+                          'imageURL':'$tmdbImageUrl${onTv[index]['poster_path']}'
+                        });
+                        AnimatedSnackBar.material(
+                          'Added to Favorites',
+                          snackBarStrategy: RemoveSnackBarStrategy(),
+                          borderRadius: const BorderRadius.all(Radius.circular(30)),
+                          duration: const Duration(seconds: 2),
+                          type: AnimatedSnackBarType.success,
+                          mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                        ).show(context);
                       },
                       child: SizedBox(
                         width: 165,

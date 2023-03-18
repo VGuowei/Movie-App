@@ -1,3 +1,5 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_maniac/views/details_movie&tv.dart';
@@ -21,6 +23,8 @@ class _MovieViewState extends State<MovieView> {
   final tmdbImageUrl = 'https://image.tmdb.org/t/p/w500';
   // default filter genre is none
   String genre='';
+  // Get a DatabaseReference
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   Map? result;
   int onPage = 1;
@@ -275,6 +279,20 @@ class _MovieViewState extends State<MovieView> {
                                           type: 'movie',
                                         ),),);
                               },
+                             onDoubleTap: () {
+                                ref.child('favorite/${listOfMovies[index]['id']}').update({
+                                  'title':listOfMovies[index]['title'],
+                                  'imageURL':'$tmdbImageUrl${listOfMovies[index]['poster_path']}'
+                                });
+                                AnimatedSnackBar.material(
+                                  'Added to Favorites',
+                                  snackBarStrategy: RemoveSnackBarStrategy(),
+                                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                  duration: const Duration(seconds: 2),
+                                  type: AnimatedSnackBarType.success,
+                                  mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                                ).show(context);
+                             },
                               child: Center(
                                 child: Stack(
                                   alignment: Alignment.topRight,

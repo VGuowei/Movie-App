@@ -1,16 +1,22 @@
 import 'dart:io';
 import 'package:connection_notifier/connection_notifier.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_maniac/views/favourite.dart';
 import 'package:movie_maniac/views/search.dart';
 import 'package:movie_maniac/views/tv.dart';
 import 'package:shake/shake.dart';
-import 'views/movie.dart';
-import 'views/home.dart';
+import 'package:movie_maniac/views/movie.dart';
+import 'package:movie_maniac/views/home.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseDatabase.instance.setPersistenceEnabled(true);
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent,systemNavigationBarColor: kDefaultIconDarkColor ));
   runApp(const MyApp());
@@ -56,7 +62,7 @@ class _MainViewState extends State<MainView> {
        HomeView(),
        MovieView(),
        TVShows(),
-       HomeView(),
+       FavoriteView(),
   ];
   // declare sensor detector
   late ShakeDetector detector;
@@ -72,10 +78,6 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     super.initState();
-    InternetConnectionChecker().onStatusChange.listen((status){
-      final hasInternet=status==InternetConnectionStatus.connected;
-      setState(()=>this.hasInternet=hasInternet);
-    });
     detector=ShakeDetector.autoStart(
     onPhoneShake: () {
     // Do stuff on phone shake
