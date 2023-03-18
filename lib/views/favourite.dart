@@ -51,11 +51,7 @@ class _FavoriteViewState extends State<FavoriteView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:  [
-                Text(
-                  (username==null)?'Welcome !':'Hello $username',
-                  style:
-                  const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
+                Text('Hello $username', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 IconButton(
                     onPressed: (){
                       showDialog(
@@ -123,11 +119,6 @@ class _FavoriteViewState extends State<FavoriteView> {
                             },
                             icon: const Icon(Icons.remove_circle_outline,color: Colors.red,)),
                         ],
-
-                        // horizontalTitleGap: 30,
-                        // leading: Container(width: 60,color: Colors.red,),
-                        // title: Text('${favouriteMap["title"]}',style: TextStyle(fontWeight: FontWeight.w500,color: Colors.yellow),maxLines: 3,),
-                        // trailing:  const Icon(Icons.favorite,color: Colors.red,),
                       ),
                     ),
                   );
