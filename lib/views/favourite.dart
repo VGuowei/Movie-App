@@ -16,14 +16,14 @@ class _FavoriteViewState extends State<FavoriteView> {
   // profile name
   String? username;
   final usernameController = TextEditingController();
-
+  // get username from data base
   getUsername() {
     ref.child('username').onValue.listen((DatabaseEvent event) {
       final String data = event.snapshot.value.toString();
       updateUsername(data);
     });
   }
-
+  // change user name
   updateUsername(String newName){
     setState(() {
       username=newName;
@@ -37,6 +37,11 @@ class _FavoriteViewState extends State<FavoriteView> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -47,7 +52,7 @@ class _FavoriteViewState extends State<FavoriteView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:  [
                 Text(
-                  username==null?'Favourite':'$username\'s Favourite',
+                  (username==null)?'Welcome':'Hello $username !',
                   style:
                   const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
@@ -95,28 +100,27 @@ class _FavoriteViewState extends State<FavoriteView> {
                 itemBuilder: (BuildContext context, DataSnapshot snapshot, Animation<double> animation, int index) {
                   Map favouriteMap = snapshot.value as Map;
                   favouriteMap['key'] = snapshot.key;
-                  return Container(
+                  return SizedBox(
                     height: 120,
-                    // color: Colors.grey,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0,0,0,16),
                       child: Row(
                         children: [
-                          Image.network(favouriteMap["imageURL"],errorBuilder: (context, error, stackTrace) => const SizedBox(width: 74,child: Icon(Icons.no_photography)),),
+                          Image.network(favouriteMap["imageURL"],errorBuilder: (context, error, stackTrace) => const SizedBox(width: 68,child: Icon(Icons.no_photography)),),
                           SizedBox(
-                            width: 220,
+                            width: MediaQuery.of(context).size.width*0.56,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(26.0),
-                                child: Text(favouriteMap["title"],style: const TextStyle(fontWeight: FontWeight.w500,color: Colors.yellow,fontSize: 16),maxLines: 3),
+                                child: Text(favouriteMap["title"],style: const TextStyle(fontWeight: FontWeight.w500,color: Colors.yellow,fontSize: 16),maxLines: 2),
                               ),
                             ],
                           ),),
                           IconButton(onPressed: (){
                               ref.child('favorite/${favouriteMap['key']}').remove();
-                            }, 
+                            },
                             icon: const Icon(Icons.remove_circle_outline,color: Colors.red,)),
                         ],
 

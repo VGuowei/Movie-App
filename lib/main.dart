@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return ConnectionNotifier(
       disconnectedText: 'No Internet Connection',
       hasIndicationIcon: false,
-        height: 34,
+        height: 50,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
