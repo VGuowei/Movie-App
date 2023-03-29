@@ -7,7 +7,7 @@ import 'package:movie_maniac/views/movie.dart';
 import 'package:movie_maniac/views/tv.dart';
 
 void main() {
-  /// TEST is under development, not working and no enough time. tried calling firebase initiate in init state but it can't find anything in general,
+  /// UNIT TEST is under development and it's not functional (no enough time). tried calling firebase initiate in init state to fix Firebase Error even then it has some other error/bug.
   testWidgets('Switches views on bottom navigation bar tap', (tester) async {
      await tester.pumpWidget(const MyApp());
 
