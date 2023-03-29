@@ -51,6 +51,7 @@ class MovieTrend extends StatelessWidget {
                                 type: 'movie',
                               ),),);
                       },
+                      // Add to favourite
                       onDoubleTap: () {
                         ref.child('favorite/${movieTrendList[index]['id']}').update({
                           'title':movieTrendList[index]['title'],
@@ -78,6 +79,7 @@ class MovieTrend extends StatelessWidget {
                                   Image.network(tmdbImageUrl + movieTrendList[index]['backdrop_path'],
                                     fit: BoxFit.cover,
                                     loadingBuilder: (context, child, loadingProgress) {
+                                      // show load indicator on loading
                                       if (loadingProgress != null) {
                                         return Center(
                                           child: SizedBox(
@@ -95,6 +97,7 @@ class MovieTrend extends StatelessWidget {
                                       }
                                       return child;
                                     },
+                                    // if api returns null show a local picture
                                   ):  const Image(image: AssetImage('assets/no_image_backdrop.jpg')),
                                 ),
                                 Container(

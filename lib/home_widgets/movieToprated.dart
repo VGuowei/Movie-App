@@ -56,6 +56,7 @@ class MovieUpcoming extends StatelessWidget {
                                   type: 'movie',
                                 ),),);
                         },
+                        // Add to favourite
                         onDoubleTap: () {
                           ref.child('favorite/${movieTopRatedList[index]['id']}').update({
                             'title':movieTopRatedList[index]['title'],
@@ -83,6 +84,7 @@ class MovieUpcoming extends StatelessWidget {
                                     Image.network(tmdbImageUrl + movieTopRatedList[index]['poster_path'],
                                       fit: BoxFit.cover,
                                       loadingBuilder: (context, child, loadingProgress) {
+                                      // show load indicator on loading
                                         if (loadingProgress != null) {
                                           return Center(
                                             child: Column(
@@ -95,6 +97,7 @@ class MovieUpcoming extends StatelessWidget {
                                         }
                                         return child;
                                       },
+                                      // if api returns null show a local picture
                                     ):const Image(image: AssetImage('assets/no_image_poster.png')),
                                   ),
                                   Container(

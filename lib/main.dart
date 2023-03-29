@@ -5,18 +5,20 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movie_maniac/views/favourite.dart';
-import 'package:movie_maniac/views/search.dart';
-import 'package:movie_maniac/views/tv.dart';
 import 'package:shake/shake.dart';
-import 'package:movie_maniac/views/movie.dart';
-import 'package:movie_maniac/views/home.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'views/favourite.dart';
+import 'views/search.dart';
+import 'views/tv.dart';
+import 'views/movie.dart';
+import 'views/home.dart';
 
 Future<void> main() async {
+  // Initialize Firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // Set persistence data
   FirebaseDatabase.instance.setPersistenceEnabled(true);
+  // Set colors for the system UI overlay
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent,systemNavigationBarColor: kDefaultIconDarkColor ));
   runApp(const MyApp());
@@ -52,21 +54,19 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  // variable that store the internet connection status
-  bool hasInternet=false;
-  // search keyword
+  // search keyword variable
   final searchController=TextEditingController();
   // widgets to swap in the body of Scaffold
   int currentView=0;
   List<Widget> views= const [
-       HomeView(),
-       MovieView(),
-       TVShows(),
-       FavoriteView(),
+       HomeView(), // 0
+       MovieView(), // 1
+       TVShows(), // 2
+       FavoriteView(), //3
   ];
   // declare sensor detector
   late ShakeDetector detector;
-  // this function it's for android platform
+  // this function it's for android platform only
   exitOnShake(){
     setState(() {
       if(Platform.isAndroid){
@@ -78,9 +78,10 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     super.initState();
+    // Start shake detector
     detector=ShakeDetector.autoStart(
     onPhoneShake: () {
-    // Do stuff on phone shake
+    // Close app on phone shake
       exitOnShake();
     },
       minimumShakeCount: 1,
@@ -92,6 +93,7 @@ class _MainViewState extends State<MainView> {
 
   @override
   void dispose() {
+    // End shake detector
     detector.stopListening();
     super.dispose();
   }
@@ -135,13 +137,15 @@ class _MainViewState extends State<MainView> {
             NavigationDestination(icon: Icon(Icons.home), label: "Home"),
             NavigationDestination(icon: Icon(Icons.movie), label: "Movie"),
             NavigationDestination(icon: Icon(Icons.live_tv), label: "Tv"),
-            NavigationDestination(icon: Icon(Icons.favorite), label: "Favorite"),
+            NavigationDestination(icon: Icon(Icons.favorite), label: "Favourite"),
           ],
           onDestinationSelected: (int index){
             setState(() {
+              // Update the UI
               currentView = index;
             });
           },
+          // Highlight the current view
           selectedIndex: currentView,
         ),
       ),

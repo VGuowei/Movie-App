@@ -118,6 +118,7 @@ class _TVShowsState extends State<TVShows> {
                                   type: 'tv',
                                 ),),);
                         },
+                        // Add to favourite
                         onDoubleTap: () {
                           ref.child('favorite/${listOfTVShows[index]['id']}').update({
                             'title':listOfTVShows[index]['name'],

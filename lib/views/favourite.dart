@@ -115,6 +115,7 @@ class _FavoriteViewState extends State<FavoriteView> {
                             ],
                           ),),
                           IconButton(onPressed: (){
+                            // remove from favorite
                               ref.child('favorite/${favouriteMap['key']}').remove();
                             },
                             icon: const Icon(Icons.remove_circle_outline,color: Colors.red,)),

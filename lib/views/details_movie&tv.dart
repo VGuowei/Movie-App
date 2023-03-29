@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 class Details extends StatelessWidget {
-  final String? poster, backdrop; // nullable
-  final String  overview, title, rate, releaseOn,type;
+  final String? poster, backdrop, releaseOn; // nullables
+  final String  overview, title, rate, type;
   final int id;
   final double popularity; // actor's popularity
   const Details(
@@ -39,6 +39,7 @@ class Details extends StatelessWidget {
                        Image.network(tmdbImageUrl + backdrop!,
                          fit: BoxFit.cover,
                          loadingBuilder: (context, child, loadingProgress) {
+                           // show load indicator on loading
                            if (loadingProgress != null) {
                              return Center(
                                child: SizedBox(
@@ -59,6 +60,7 @@ class Details extends StatelessWidget {
                            }
                            return child;
                          },
+                         // when backdrop is null
                       ): const Padding(
                         padding: EdgeInsets.all(12),
                         child: Image(image: AssetImage('assets/no_image_backdrop.jpg')),
@@ -117,7 +119,7 @@ class Details extends StatelessWidget {
                 children: [
                   Text(title,softWrap: true,maxLines: 2,style: const TextStyle(fontSize: 22),),
                   const SizedBox(height: 14,),
-                  (releaseOn!='')?Text('Release date:  $releaseOn',style: const TextStyle(fontSize: 16),):const Text('No release date'),
+                  (releaseOn!='')?Text('Release date:  ${releaseOn??'-'}',style: const TextStyle(fontSize: 16),):const Text('No release date'),
                   const SizedBox(height: 10,),
                   (popularity!=-1)?Text('Popularity:  $popularity',style: const TextStyle(fontSize: 16),maxLines: 1):Container(),
                   const SizedBox(height: 10,),

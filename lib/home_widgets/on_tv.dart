@@ -56,6 +56,7 @@ class OnTv extends StatelessWidget {
                                 type: 'tv',
                               ),),);
                       },
+                      // Add to favourite
                       onDoubleTap: () {
                         ref.child('favorite/${onTv[index]['id']}').update({
                           'title':onTv[index]['name'],

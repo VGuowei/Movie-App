@@ -52,6 +52,7 @@ class PopularActors extends StatelessWidget {
                               played: actors[index]['known_for'],
                             ),),);
                       },
+                      // Add to favourite
                       onDoubleTap: () {
                         ref.child('favorite/${actors[index]['id']}').update({
                           'title':actors[index]['name'],
@@ -75,10 +76,12 @@ class PopularActors extends StatelessWidget {
                               child:
                               SizedBox(
                                 height: 150,
-                                  child: Image.network(tmdbImageUrl + actors[index]['profile_path'],
+                                  child: (actors[index]['profile_path']!=null)?
+                                  Image.network(tmdbImageUrl + actors[index]['profile_path'],
                                     fit: BoxFit.cover,
                                     loadingBuilder: (context, child, loadingProgress) {
-                                  if (loadingProgress != null) {
+                                      // show load indicator on loading
+                                    if (loadingProgress != null) {
                                     return Center(
                                       child: Column(
                                         children: const [
@@ -92,7 +95,9 @@ class PopularActors extends StatelessWidget {
                                   }
                                   return child;
                                 },
-                              ),),
+                                    // if api returns null show no picture icon
+                                ):Icon(Icons.no_photography)
+                              ),
                             ),
                             Padding(
                                 padding:

@@ -31,13 +31,14 @@ class _SearchViewState extends State<SearchView> {
   multiSearch(String keyword) async{
     result= await tmdb.v3.search.queryMulti(keyword);
     setState(() {
-      searchResult = result!['results'];
+      searchResult = result!['results']; // For details, refer to TMDB document: https://developers.themoviedb.org/3/search/multi-search
     });
   }
 
   mediaType(String type, int i){
 
     switch(type){
+      // Media type is movie
       case 'movie':
         return InkWell(child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -98,6 +99,7 @@ class _SearchViewState extends State<SearchView> {
                 ),),);
         });
 
+      // Media type is tv
       case 'tv':
         return Padding(
           padding: const EdgeInsets.all(10.0),
@@ -158,6 +160,7 @@ class _SearchViewState extends State<SearchView> {
           },),
         );
 
+      // Media type is person
       case'person':
         return Padding(
           padding: const EdgeInsets.all(10.0),
